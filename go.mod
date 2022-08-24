@@ -1,3 +1,3 @@
-module github.com/norwd/pwd
+module github.com/norwd/pword
 
 go 1.19
