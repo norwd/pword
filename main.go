@@ -10,6 +10,29 @@ import (
 
 const version = "v0.0.0"
 
+func usage(self string) {
+	fmt.Fprintln(os.Stderr, `
+usage: ` + self + ` [-v|--version] [-h|--help] [simple]
+
+options:
+
+	-v | --version
+
+		Show the version and exit.
+
+	-h | --help
+
+		Show this message and exit.
+
+backends:
+
+	simple
+
+		Generates a simple, 16 character password.
+
+` + version)
+}
+
 func main() {
 	self := path.Base(os.Args[0])
 	args := os.Args[1:]
@@ -24,24 +47,7 @@ func main() {
 			fmt.Fprintln(os.Stderr, version)
 			os.Exit(0)
 		case "-h", "--help":
-			fmt.Fprintln(os.Stderr, self+" is a simple password generator.")
-			fmt.Fprintln(os.Stderr, "")
-			fmt.Fprintln(os.Stderr, "usage: "+self+" [-v|--version] [-h--help] [OPTIONS] [TYPE]")
-			fmt.Fprintln(os.Stderr, "")
-			fmt.Fprintln(os.Stderr, "options:")
-			fmt.Fprintln(os.Stderr, "")
-			fmt.Fprintln(os.Stderr, "\t-v | --version")
-			fmt.Fprintln(os.Stderr, "\t\tShow the version and exit.")
-			fmt.Fprintln(os.Stderr, "")
-			fmt.Fprintln(os.Stderr, "\t-h | --help")
-			fmt.Fprintln(os.Stderr, "\t\tShow this message and exit.")
-			fmt.Fprintln(os.Stderr, "")
-			fmt.Fprintln(os.Stderr, "types:")
-			fmt.Fprintln(os.Stderr, "")
-			fmt.Fprintln(os.Stderr, "\tsimple")
-			fmt.Fprintln(os.Stderr, "\t\tGenerates a simple password.")
-			fmt.Fprintln(os.Stderr, "")
-			fmt.Fprintln(os.Stderr, version)
+			usage(self)
 			os.Exit(0)
 		case "simple":
 			var buf [16]byte
@@ -50,11 +56,12 @@ func main() {
 				os.Exit(1)
 			}
 
-			password := base64.RawStdEncoding.EncodeToString(buf[:])
-			fmt.Println(password)
+			fmt.Println(base64.RawStdEncoding.EncodeToString(buf[:]))
 		default:
-			fmt.Fprintln(os.Stderr, fmt.Sprintf("%s: unknown flag or password type '%s'", self, arg))
+			fmt.Fprintln(os.Stderr, self + ": unknown flag or password type '" + arg + "'")
+			usage(self)
 			os.Exit(1)
 		}
 	}
 }
+
