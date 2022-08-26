@@ -1,11 +1,11 @@
 package main
 
 import (
-	"crypto/rand"
-	"encoding/base64"
 	"fmt"
 	"os"
 	"path"
+
+	"github.com/norwd/pword/simple"
 )
 
 const version = "v0.0.0"
@@ -50,13 +50,12 @@ func main() {
 			usage(self)
 			os.Exit(0)
 		case "simple":
-			var buf [16]byte
-			if _, err := rand.Read(buf[:]); err != nil {
+			if password, err := simple.Password(); err != nil {
 				fmt.Fprintln(os.Stderr, self+": "+err.Error())
 				os.Exit(1)
+			} else {
+				fmt.Println(password)
 			}
-
-			fmt.Println(base64.RawStdEncoding.EncodeToString(buf[:]))
 		default:
 			fmt.Fprintln(os.Stderr, self + ": unknown flag or password type '" + arg + "'")
 			usage(self)
