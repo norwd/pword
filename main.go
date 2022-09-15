@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"os"
 	"path"
-
-	"github.com/norwd/pword/simple"
 )
 
 const version = "v0.0.0"
+
+type passworder interface {
+	Password() (password string, err error)
+}
 
 func usage(self string) {
 	fmt.Fprintln(os.Stderr, `
@@ -41,6 +43,8 @@ func main() {
 		args = append(args, "simple")
 	}
 
+	var generator passworder
+
 	for _, arg := range args {
 		switch arg {
 		case "-v", "--version":
@@ -50,16 +54,18 @@ func main() {
 			usage(self)
 			os.Exit(0)
 		case "simple":
-			if password, err := simple.Password(); err != nil {
-				fmt.Fprintln(os.Stderr, self+": "+err.Error())
-				os.Exit(1)
-			} else {
-				fmt.Println(password)
-			}
+			generator = simple{}
 		default:
 			fmt.Fprintln(os.Stderr, self + ": unknown flag or password type '" + arg + "'")
 			usage(self)
 			os.Exit(1)
+		}
+
+		if password, err := generator.Password(); err != nil {
+			fmt.Fprintln(os.Stderr, self+": "+err.Error())
+			os.Exit(1)
+		} else {
+			fmt.Println(password)
 		}
 	}
 }

@@ -1,11 +1,13 @@
-package simple
+package main
 
 import (
 	"crypto/rand"
 	"encoding/base64"
 )
 
-func Password() (password string, err error) {
+type simple struct {}
+
+func (s simple) Password() (password string, err error) {
 	var buf [16]byte
 
 	_, err = rand.Read(buf[:])
