@@ -6,6 +6,7 @@
         "linters",
         "linter",
         "refs",
-        "nosborn"
+        "nosborn",
+        "stefanzweifel"
     ]
 }
