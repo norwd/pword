@@ -1,0 +1,15 @@
+Results of actionlint linter (version 1.6.16)
+See documentation on https://oxsecurity.github.io/megalinter/latest/descriptors/action_actionlint/
+-----------------------------------------------
+
+❌ [ERROR] for workspace /github/workspace
+Linter raw log:
+.github/workflows/lint.yml:3:1: unexpected key "run-name" for "workflow" section. expected one of "concurrency", "defaults", "env", "jobs", "name", "on", "permissions" [syntax-check]
+  |
+3 | run-name: "Linters started by @${{ github.actor }}"
+  | ^~~~~~~~~
+.github/workflows/mega-linter.yml:5:1: unexpected key "run-name" for "workflow" section. expected one of "concurrency", "defaults", "env", "jobs", "name", "on", "permissions" [syntax-check]
+  |
+5 | run-name: "MegaLinter started by @${{ github.actor }}"
+  | ^~~~~~~~~
+
