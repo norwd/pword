@@ -59,6 +59,9 @@ jobs:
           # Where are spelling errors reported?
           SPELL_CSPELL_CONFIG_FILE: ".github/cspell.json"
 
+          # Temporarily softed errors from actionlint until https://github.com/rhysd/actionlint/pull/231 is merged
+          DISABLE_ERRORS_LINTERS: "ACTION_ACTIONLINT"
+
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
