@@ -7,9 +7,7 @@
     "linter",
     "refs",
     "nosborn",
-    "stefanzweifel"
-  ],
-  "ignorePaths": [
-    "/github/workspace/**"
+    "stefanzweifel",
+    "dylib"
   ]
 }
