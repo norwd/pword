@@ -21,28 +21,6 @@ jobs:
           files: '**/*.md'
           dot: true
 
-  yaml:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      # Lint all .yml files
-      - name: Lint yaml files
-        uses: ibiqlik/action-yamllint@v3
-        with:
-          strict: true
-          format: parsable
-          config_data: |
-            extends: default
-            rules:
-              line-length: disable
-              braces:
-                max-spaces-inside: 1
-              truthy:
-                check-keys: false
-                allowed-values:
-                  - "true"
-                  - "false"
   editorconfig:
     runs-on: ubuntu-latest
     steps:
