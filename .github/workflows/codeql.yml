@@ -11,8 +11,10 @@
 # supported CodeQL languages.
 #
 
-name: "CodeQL"
+---
 
+name: "CodeQL"
+run-name: 'CodeQL started by @${{ github.actor }}'
 on:
   push:
     branches: [ "main" ]
