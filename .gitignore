@@ -13,3 +13,7 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+# MegaLinter reports are not really needed currently
+megalinter-reports/
+github_conf/
