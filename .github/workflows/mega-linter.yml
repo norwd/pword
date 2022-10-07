@@ -56,6 +56,9 @@ jobs:
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
           # DISABLE: COPYPASTE,SPELL # Uncomment to disable copy-paste and spell checks
 
+          # Where are spelling errors reported?
+          SPELL_CSPELL_CONFIG_FILE: ".github/cspell.json"
+
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
         if: ${{ success() }} || ${{ failure() }}
