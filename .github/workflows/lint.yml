@@ -1,5 +1,6 @@
 ---
-name: Lint
+
+name: "Lint"
 run-name: "Linters started by @${{ github.actor }}"
 permissions: read-all
 
@@ -7,22 +8,44 @@ on:
   push:
 
 jobs:
+
   markdown:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       # Lint all *.md files
       - name: Lint markdown files
-        uses: nosborn/github-action-markdown-cli@v3.2.0
+        uses: nosborn/github-action-markdown-cli@v1.1.1
         with:
           files: "**/*.md"
           dot: true
 
+  yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Lint all .yml files
+      - name: yaml lint
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          strict: true
+          format: parsable
+          config_data: |
+            extends: default
+            rules:
+              line-length: disable
+              truthy:
+                check-keys: false
+                allowed-values:
+                  - "true"
+                  - "false"
+
   editorconfig:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       # Check all files against the .editorconfig
       - name: Check editorconfig
