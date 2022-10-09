@@ -60,9 +60,6 @@ jobs:
           # Where are spelling errors configured?
           SPELL_CSPELL_CONFIG_FILE: ".github/cspell.json"
 
-          # Where are go linters configured
-          GO_GOLANGCI_LINT_CONFIG_FILE: ".github/golangci.yml"
-
           # Temporarily soften errors from actionlint until https://github.com/rhysd/actionlint/pull/231 is merged
           DISABLE_ERRORS_LINTERS: "ACTION_ACTIONLINT"
 
