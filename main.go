@@ -15,7 +15,7 @@ type passworder interface {
 
 func usage(self string) {
 	fmt.Fprintln(os.Stderr, `
-usage: ` + self + ` [-v|--version] [-h|--help] [simple]
+usage: ` + self + ` [-v|--version] [-h|--help] [BACKEND]
 
 options:
 
@@ -29,9 +29,7 @@ options:
 
 backends:
 
-	simple
-
-		Generates a simple, 16 character password.
+	simple - Generates a simple, 16 character password.
 
 ` + version)
 }
