@@ -12,9 +12,8 @@
 #
 
 ---
-
 name: "CodeQL"
-run-name: 'CodeQL started by @${{ github.actor }}'
+run-name: "CodeQL started by @${{ github.actor }}"
 on:
   push:
     branches:
@@ -26,7 +25,7 @@ on:
       - "main"
 
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
 
 jobs:
   analyse:
@@ -40,11 +39,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
         language:
-          - 'go'
+          - "go"
 
     steps:
       - name: Checkout repository
