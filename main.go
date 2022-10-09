@@ -15,7 +15,7 @@ type passworder interface {
 
 func usage(self string) {
 	fmt.Fprintln(os.Stderr, `
-usage: ` + self + ` [-v|--version] [-h|--help] [BACKEND]
+usage: `+self+` [-v|--version] [-h|--help] [BACKEND]
 
 options:
 
