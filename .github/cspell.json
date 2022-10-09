@@ -8,6 +8,7 @@
     "refs",
     "nosborn",
     "stefanzweifel",
-    "dylib"
+    "dylib",
+    "golangci"
   ]
 }
