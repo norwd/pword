@@ -55,7 +55,7 @@ func main() {
 		case "simple":
 			generator = simple{}
 		default:
-			fmt.Fprintln(os.Stderr, self + ": unknown flag or password type '" + arg + "'")
+			fmt.Fprintln(os.Stderr, self+": unknown flag or password type '"+arg+"'")
 			usage(self)
 			os.Exit(1)
 		}
