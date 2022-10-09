@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 )
 
-type simple struct {}
+type simple struct{}
 
 func (s simple) Password() (password string, err error) {
 	var buf [16]byte
