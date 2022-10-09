@@ -31,7 +31,7 @@ backends:
 
 	simple - Generates a simple, 16 character password.
 
-` + version)
+`+version)
 }
 
 func main() {
