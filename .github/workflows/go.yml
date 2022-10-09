@@ -58,6 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          token: ${{ secrets.AUTO_GO_FMT_PWORD }}
           ref: ${{ github.ref }}
 
       - uses: actions/setup-go@v2
