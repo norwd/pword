@@ -15,4 +15,3 @@ func (s simple) Password() (password string, err error) {
 
 	return
 }
-
