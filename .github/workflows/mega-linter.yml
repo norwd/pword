@@ -57,8 +57,11 @@ jobs:
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
           # DISABLE: COPYPASTE,SPELL # Uncomment to disable copy-paste and spell checks
 
-          # Where are spelling errors reported?
+          # Where are spelling errors configured?
           SPELL_CSPELL_CONFIG_FILE: ".github/cspell.json"
+
+          # Where are go linters configured
+          GO_GOLANGCI_LINT_CONFIG_FILE: ".github/golangci.yml"
 
           # Temporarily soften errors from actionlint until https://github.com/rhysd/actionlint/pull/231 is merged
           DISABLE_ERRORS_LINTERS: "ACTION_ACTIONLINT"
