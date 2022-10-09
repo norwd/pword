@@ -9,6 +9,7 @@
     "nosborn",
     "stefanzweifel",
     "dylib",
-    "golangci"
+    "golangci",
+    "norwd"
   ]
 }
