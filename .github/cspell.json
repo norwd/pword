@@ -8,6 +8,13 @@
     "refs",
     "nosborn",
     "stefanzweifel",
-    "dylib"
+    "dylib",
+    "golangci",
+    "norwd",
+    "codeql",
+    "autobuild",
+    "buildscript",
+    "pword",
+    "passworder"
   ]
 }

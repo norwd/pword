@@ -57,8 +57,14 @@ jobs:
           # ADD YOUR CUSTOM ENV VARIABLES HERE OR DEFINE THEM IN A FILE .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
           # DISABLE: COPYPASTE,SPELL # Uncomment to disable copy-paste and spell checks
 
-          # Where are spelling errors reported?
+          # Where are spelling errors configured?
           SPELL_CSPELL_CONFIG_FILE: ".github/cspell.json"
+
+          # Call the linter from the root of the project
+          GO_GOLANGCI_LINT_CLI_LINT_MODE: "project"
+
+          # Temporarily soften errors from revive until I figure out why it's yelling at me about needed in a doc comment in each and every file...
+          GO_REVIVE_DISABLE_ERRORS: "true"
 
           # Temporarily soften errors from actionlint until https://github.com/rhysd/actionlint/pull/231 is merged
           DISABLE_ERRORS_LINTERS: "ACTION_ACTIONLINT"

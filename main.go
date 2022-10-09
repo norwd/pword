@@ -14,7 +14,7 @@ type passworder interface {
 
 func usage(self string) {
 	fmt.Fprintln(os.Stderr, `
-usage: ` + self + ` [-v|--version] [-h|--help] [simple]
+usage: `+self+` [-v|--version] [-h|--help] [BACKEND]
 
 options:
 
@@ -28,11 +28,9 @@ options:
 
 backends:
 
-	simple
+	simple - Generates a simple, 16 character password.
 
-		Generates a simple, 16 character password.
-
-` + version)
+`+version)
 }
 
 func main() {
@@ -56,7 +54,7 @@ func main() {
 		case "simple":
 			generator = simple{}
 		default:
-			fmt.Fprintln(os.Stderr, self + ": unknown flag or password type '" + arg + "'")
+			fmt.Fprintln(os.Stderr, self+": unknown flag or password type '"+arg+"'")
 			usage(self)
 			os.Exit(1)
 		}
@@ -69,4 +67,3 @@ func main() {
 		}
 	}
 }
-

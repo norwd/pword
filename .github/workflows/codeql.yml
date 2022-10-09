@@ -2,7 +2,7 @@
 # For most projects, this workflow file will not need changing; you simply need
 # to commit it to your repository.
 #
-# You may wish to alter this file to override the set of languages analyzed,
+# You may wish to alter this file to override the set of languages analysed,
 # or to provide custom queries or build logic.
 #
 # ******** NOTE ********
@@ -12,9 +12,8 @@
 #
 
 ---
-
 name: "CodeQL"
-run-name: 'CodeQL started by @${{ github.actor }}'
+run-name: "CodeQL started by @${{ github.actor }}"
 on:
   push:
     branches:
@@ -26,11 +25,11 @@ on:
       - "main"
 
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
 
 jobs:
-  analyze:
-    name: Analyze
+  analyse:
+    name: Analyse
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -40,11 +39,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
         language:
-          - 'go'
+          - "go"
 
     steps:
       - name: Checkout repository
