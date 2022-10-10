@@ -1,7 +1,7 @@
 ---
 
 name: "Enable Automerge"
-run-name: "Automerge enabled by ${{ github.event_name }}"
+run-name: "Automerge enabled for #${{ github.event.number }}"
 permissions: read-all
 
 on:
