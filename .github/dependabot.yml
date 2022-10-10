@@ -6,17 +6,13 @@ updates:
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
-      interval: "weekly"
-    assignees:
-      - "norwd"
+      interval: "daily"
     reviewers:
       - "norwd"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-    assignees:
-      - "norwd"
+      interval: "daily"
     reviewers:
       - "norwd"
