@@ -1,0 +1,20 @@
+---
+
+name: "Enable Automerge"
+run-name: "Automerge enabled by ${{ github.event_name }}"
+permissions: read-all
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: heitorpolidoro/automerge-pr@v1
+        env:
+          norwd: ${{ secrets.AUTO_MERGE_PWORD }}
