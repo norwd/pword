@@ -16,7 +16,7 @@ jobs:
 
       # Lint all *.md files
       - name: Lint markdown files
-        uses: nosborn/github-action-markdown-cli@v1.1.1
+        uses: nosborn/github-action-markdown-cli@v3.2.0
         with:
           files: "**/*.md"
           dot: true
