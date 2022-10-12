@@ -1,7 +1,12 @@
 ---
 
+prerelease: true
+
 name-template: 'v$RESOLVED_VERSION 🌈'
 tag-template: 'v$RESOLVED_VERSION'
+
+change-template: '- $TITLE (#$NUMBER)'
+change-title-escapes: '\<*_&'
 
 categories:
   - title: '🚀 Features'
@@ -23,9 +28,6 @@ categories:
     collapse-after: 3
     labels:
       - 'dependencies'
-
-change-template: '- $TITLE (#$NUMBER)'
-change-title-escapes: '\<*_&'
 
 version-resolver:
   default: patch
