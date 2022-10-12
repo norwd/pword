@@ -5,13 +5,23 @@ import (
 	"encoding/base64"
 )
 
-type simple struct{}
+const defaultSimplePasswordLength = 16
+
+type simple struct{
+	length int
+}
 
 func (s simple) Password() (password string, err error) {
-	var buf [16]byte
+	length := defaultSimplePasswordLength
+
+	if s.length > 0 {
+		length = s.length
+	}
+
+	buf := make([]byte, length)
 
 	_, err = rand.Read(buf[:])
-	password = base64.RawStdEncoding.EncodeToString(buf[:])
+	password = base64.RawStdEncoding.EncodeToString(buf[:])[:length]
 
 	return
 }
