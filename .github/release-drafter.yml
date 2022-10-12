@@ -1,7 +1,28 @@
 ---
 
+prerelease: true
+
 name-template: 'v$RESOLVED_VERSION 🔑🔒💻'
 tag-template: 'v$RESOLVED_VERSION'
+
+change-template: '- $TITLE (#$NUMBER)'
+change-title-escapes: '\<*_&'
+
+autolabeler:
+  - label: 'github'
+    files:
+      - '.github/**'
+
+  - label: 'documentation'
+    files:
+      - '*.md'
+
+  - label: 'chore'
+    files:
+      - '.gitignore'
+      - '.gitattributes'
+      - '*.gitignore'
+      - '*.gitattributes'
 
 categories:
   - title: '🚀 Features'
@@ -21,14 +42,16 @@ categories:
     collapse-after: 3
     labels:
       - 'chore'
+      - 'github'
+      - 'documentation'
+      - 'doc'
+      - 'docs'
 
   - title: '⬆️ Dependencies'
     collapse-after: 3
     labels:
       - 'dependencies'
-
-change-template: '- $TITLE (#$NUMBER)'
-change-title-escapes: '\<*_&'
+      - 'deps'
 
 version-resolver:
   default: patch
