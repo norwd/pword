@@ -2,7 +2,7 @@
 
 prerelease: true
 
-name-template: 'v$RESOLVED_VERSION 🌈'
+name-template: 'v$RESOLVED_VERSION 🔑🔒💻'
 tag-template: 'v$RESOLVED_VERSION'
 
 change-template: '- $TITLE (#$NUMBER)'
