@@ -24,12 +24,8 @@ categories:
     labels:
       - 'dependencies'
 
-change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
+change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&'
-
-replacers:
-  - search: '@norwd'
-    replace: 'norwd'
 
 version-resolver:
   default: patch
