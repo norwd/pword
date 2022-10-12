@@ -27,6 +27,10 @@ categories:
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&'
 
+replacers:
+  - search: '@norwd'
+    replace: 'norwd'
+
 version-resolver:
   default: patch
 
