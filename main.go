@@ -1,10 +1,10 @@
 package main
 
 import (
-	"strconv"
 	"fmt"
 	"os"
 	"path"
+	"strconv"
 )
 
 const version = "v0.0.0"
@@ -73,7 +73,7 @@ func main() {
 						usage(self)
 						os.Exit(1)
 					} else if length, err := strconv.Atoi(args[i]); err != nil {
-						fmt.Fprintln(os.Stderr, self+": invalid length '"+args[i]+"': " + err.Error())
+						fmt.Fprintln(os.Stderr, self+": invalid length '"+args[i]+"': "+err.Error())
 						usage(self)
 						os.Exit(1)
 					} else {

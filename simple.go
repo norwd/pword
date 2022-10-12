@@ -7,7 +7,7 @@ import (
 
 const defaultSimplePasswordLength = 16
 
-type simple struct{
+type simple struct {
 	length int
 }
 
