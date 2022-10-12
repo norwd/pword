@@ -1,10 +1,10 @@
 package main
 
 import (
-	"strconv"
 	"fmt"
 	"os"
 	"path"
+	"strconv"
 )
 
 const version = "v0.0.0"
