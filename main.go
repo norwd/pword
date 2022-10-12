@@ -1,6 +1,6 @@
 package main
 
-import "github.com/norwd/pword/cmd"
+import "github.com/norwd/pword/internal/cmd"
 
 func main() {
 	cmd.Execute()
