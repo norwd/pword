@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"strconv"
 )
 
 const version = "v0.0.0"
@@ -14,9 +15,11 @@ type passworder interface {
 
 func usage(self string) {
 	fmt.Fprintln(os.Stderr, `
-usage: `+self+` [-v|--version] [-h|--help] [BACKEND]
+`+self+` - A small, command-line password generator.
 
-options:
+usage: `+self+` [-v|--version] [-h|--help] [BACKEND] [OPTIONS]
+
+global options:
 
 	-v | --version
 
@@ -28,7 +31,15 @@ options:
 
 backends:
 
-	simple - Generates a simple, 16 character password.
+	simple - Generates a simple password, just a random string of characters.
+
+	usage: simple [-l|--length <LENGTH>]
+
+	options:
+
+		-l | --length <LENGTH>
+
+			Sets the length of the password. Defaults to 16.
 
 `+version)
 }
@@ -43,8 +54,8 @@ func main() {
 
 	var generator passworder
 
-	for _, arg := range args {
-		switch arg {
+	for i := 0; i < len(args); i++ {
+		switch arg := args[i]; arg {
 		case "-v", "--version":
 			fmt.Fprintln(os.Stderr, version)
 			os.Exit(0)
@@ -52,7 +63,30 @@ func main() {
 			usage(self)
 			os.Exit(0)
 		case "simple":
-			generator = simple{}
+			s := simple{}
+
+			for i++; i < len(args); i++ {
+				switch arg := args[i]; arg {
+				case "-l", "--length":
+					if i++; i >= len(args) {
+						fmt.Fprintln(os.Stderr, self+": argument '"+arg+"' requires parameter")
+						usage(self)
+						os.Exit(1)
+					} else if length, err := strconv.Atoi(args[i]); err != nil {
+						fmt.Fprintln(os.Stderr, self+": invalid length '"+args[i]+"': "+err.Error())
+						usage(self)
+						os.Exit(1)
+					} else {
+						s.length = length
+					}
+				default:
+					fmt.Fprintln(os.Stderr, self+": unknown flag '"+arg+"'")
+					usage(self)
+					os.Exit(1)
+				}
+			}
+
+			generator = s
 		default:
 			fmt.Fprintln(os.Stderr, self+": unknown flag or password type '"+arg+"'")
 			usage(self)
