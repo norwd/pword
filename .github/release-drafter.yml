@@ -43,6 +43,7 @@ categories:
     labels:
       - 'chore'
       - 'github'
+      - 'github_actions'
       - 'documentation'
       - 'doc'
       - 'docs'
