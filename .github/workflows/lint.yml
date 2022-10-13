@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo this should fail
+          FOO="asdf"
+          echo this should fail: $FOO
 
   # Lint all workflow actions
   actions:
