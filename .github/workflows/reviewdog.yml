@@ -5,7 +5,7 @@ run-name: "Reviewdog started by @${{ github.actor }}"
 permissions: "read-all"
 
 on:
-  - "pull_request"
+  pull_request:
 
 jobs:
 
