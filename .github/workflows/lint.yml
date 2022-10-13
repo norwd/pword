@@ -6,18 +6,8 @@ permissions: read-all
 
 on:
   push:
-    branch: main
 
 jobs:
-
-  # Lint all workflow actions
-  actions:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: reviewdog/action-actionlint@v1
-        with:
-          fail_on_error: true
 
   # Lint all *.md files
   markdown:
