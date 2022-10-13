@@ -9,26 +9,29 @@ on:
 
 jobs:
 
+  # Lint all workflow actions
+  actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-actionlint@v1
+
+  # Lint all *.md files
   markdown:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.1.0
-
-      # Lint all *.md files
-      - name: Lint markdown files
-        uses: nosborn/github-action-markdown-cli@v3.2.0
+      - uses: nosborn/github-action-markdown-cli@v3.2.0
         with:
           files: "**/*.md"
           dot: true
 
+  # Lint all .yml files
   yaml:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.1.0
-
-      # Lint all .yml files
-      - name: yaml lint
-        uses: ibiqlik/action-yamllint@v3
+      - uses: ibiqlik/action-yamllint@v3
         with:
           strict: true
           format: parsable
@@ -42,11 +45,9 @@ jobs:
                   - "true"
                   - "false"
 
+  # Check all files against the .editorconfig
   editorconfig:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.1.0
-
-      # Check all files against the .editorconfig
-      - name: Check editorconfig
-        uses: editorconfig-checker/action-editorconfig-checker@v1.0.0
+      - uses: editorconfig-checker/action-editorconfig-checker@v1.0.0
