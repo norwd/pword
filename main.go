@@ -5,8 +5,7 @@ import (
 	"github.com/norwd/pword/internal/cmd"
 )
 
-func main()
-{
+func main() {
 	cmd.Execute()
 	fmt.Sprintf("%s", "")
 }
