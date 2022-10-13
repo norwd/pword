@@ -6,15 +6,9 @@ permissions: read-all
 
 on:
   push:
+    branch: main
 
 jobs:
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          FOO="asdf"
-          echo this should fail: $FOO
 
   # Lint all workflow actions
   actions:
