@@ -1,0 +1,46 @@
+---
+
+name: "Reviewdog"
+run-name: "Reviewdog started by @${{ github.actor }}"
+permissions: "read-all"
+
+on:
+  - "pull_request"
+
+jobs:
+
+  # Lint all workflow actions
+  actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-actionlint@v1
+        with:
+          fail_on_error: true
+
+  # Lint all go files
+  golangci-lint:
+    name: runner / golangci-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-golangci-lint@v2
+        with:
+          golangci_lint_flags: "--enable-all --exclude-use-default=false"
+
+  # Lint all markdown files
+  markdownlint:
+    name: runner / markdownlint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: markdownlint
+        uses: reviewdog/action-markdownlint@v0
+
+  # Lint all yaml files
+  yamllint:
+    name: runner / yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: reviewdog/action-yamllint@v1
