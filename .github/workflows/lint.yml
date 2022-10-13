@@ -9,6 +9,12 @@ on:
 
 jobs:
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo this should fail
+
   # Lint all workflow actions
   actions:
     runs-on: ubuntu-latest
