@@ -13,6 +13,7 @@ certify that you wrote or otherwise have the right to submit the code you are
 contributing to this project.
 
 See also:
+
 * [LICENSE]
 * [CODE OF CONDUCT]
 
