@@ -82,7 +82,7 @@ jobs:
           commit_user_name: norwd
           commit_user_email: 106889957+norwd@users.noreply.github.com
           commit_message: Auto go-fmt
-          commit_options: -s -S
+          commit_options: -S
 
   report:
     runs-on: ubuntu-latest
