@@ -19,12 +19,6 @@ coverage:
 push:
   if: is_pull_request
 
-summary:
-  hideFooterLink: true
-
-comment:
-  hideFooterLink: true
-
 report:
   datastores:
     - artifact://norwd/pword
