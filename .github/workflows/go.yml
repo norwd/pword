@@ -74,6 +74,10 @@ jobs:
 
       - run: go test -v -coverprofile=coverage.out ./...
 
+      - uses: k1LoW/octocov-action@v0
+        with:
+          config: .github/octocov.yml
+
   fmt:
     runs-on: ubuntu-latest
     steps:
