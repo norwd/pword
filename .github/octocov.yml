@@ -11,10 +11,10 @@ repository: norwd/pword
 coverage:
 
   paths:
-    - coverage.out
+    - ../coverage.out
 
   badge:
-    path: .github/assets/coverage.svg
+    path: assets/coverage.svg
 
 push:
   if: is_pull_request
