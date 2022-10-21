@@ -9,6 +9,10 @@
 repository: norwd/pword
 
 coverage:
+
+  paths:
+    - coverage.out
+
   badge:
     path: .github/assets/coverage.svg
 
