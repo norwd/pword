@@ -4,6 +4,8 @@
 # See: https://github.com/k1LoW/octocov#configuration
 #
 
+---
+
 repository: norwd/pword
 
 coverage:
