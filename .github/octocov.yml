@@ -1,0 +1,24 @@
+#
+# Configure the OctoCov tool
+#
+# See: https://github.com/k1LoW/octocov#configuration
+#
+
+repository: norwd/pword
+
+coverage:
+  badge:
+    path: .github/assets/coverage.svg
+
+push:
+  if: is_pull_request
+
+summary:
+  hideFooterLink: true
+
+comment:
+  hideFooterLink: true
+
+report:
+  datastores:
+    - artifact://norwd/pword
