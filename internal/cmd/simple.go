@@ -15,7 +15,7 @@ func init() {
 var simpleCmd = &cobra.Command{
 	Use:   "simple",
 	Short: "Generates a simple password.",
-	Long: "Generate a simple base64 encoded password from random data.",
+	Long:  "Generate a simple base64 encoded password from random data.",
 	RunE:  runSimpleCmd,
 }
 
