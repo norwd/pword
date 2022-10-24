@@ -24,8 +24,8 @@ go install github.com/norwd/pword@latest
 ```
 
 If you don't want to install the entire Go tool-chain, you can just download the
-binary directly from https://gobinaries.com for a smaller installation footprint
-using the following command:
+binary directly from [https://gobinaries.com](https://gobinaries.com) for a
+smaller installation footprint using the following command:
 
 ```sh
 curl -sf https://gobinaries.com/norwd/pword@latest | sh
@@ -42,5 +42,5 @@ git clone git@github.com:norwd/pword.git # Clone pword (or download source zip)
 cd pword                                 # Change directories to the source root
 go build                                 # Build the source
 ./pword                                  # Run your local binary!
-cp pword ~/bin                           # (Optional) Install the binary to your $PATH
+cp pword ~/bin                           # (Optional) Install the binary
 ```
