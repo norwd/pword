@@ -14,10 +14,29 @@ on:
 
 jobs:
 
+  analyse:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: github/codeql-action/init@v2
+        with:
+          languages: go
+          queries: +security-extended,security-and-quality
+
+      - uses: github/codeql-action/autobuild@v2
+      - uses: github/codeql-action/analyze@v2
+        with:
+          category: "/language:go"
+
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3
       - uses: Jerome1337/golint-action@v1.0.2
         with:
           golint-path: '.'
@@ -25,7 +44,7 @@ jobs:
   vet:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
         with:
           stable: false
@@ -36,7 +55,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
         with:
           stable: false
@@ -47,7 +66,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
         with:
           stable: false
@@ -58,7 +77,7 @@ jobs:
   fmt:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.AUTO_GO_FMT_PWORD || secrets.GITHUB_TOKEN }}
           ref: ${{ github.ref }}
@@ -67,11 +86,22 @@ jobs:
         with:
           go-version: '^1'
 
-      - run: go fmt -x
+      - run: gofmt -l -w -s .
+
+      - uses: crazy-max/ghaction-import-gpg@v5
+        with:
+          gpg_private_key: ${{ secrets.AUTO_COMMIT_GPG_PRIVATE_KEY_PWORD }}
+          passphrase: ${{ secrets.AUTO_COMMIT_GPG_PASSPHRASE_PWORD }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
+          commit_author: norwd <106889957+norwd@users.noreply.github.com>
+          commit_user_name: norwd
+          commit_user_email: 106889957+norwd@users.noreply.github.com
           commit_message: Auto go-fmt
+          commit_options: -s -S
 
   report:
     runs-on: ubuntu-latest

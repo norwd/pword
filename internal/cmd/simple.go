@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"fmt"
 	"crypto/rand"
 	"encoding/base64"
+	"fmt"
 	"github.com/spf13/cobra"
 )
 
@@ -13,10 +13,10 @@ func init() {
 }
 
 var simpleCmd = &cobra.Command{
-	Use: "simple",
+	Use:   "simple",
 	Short: "Generates a simple password.",
-	Long: "Generate a simple base64 encoded password from random data.",
-	RunE: runSimpleCmd,
+	Long:  "Generate a simple base64 encoded password from random data.",
+	RunE:  runSimpleCmd,
 }
 
 func runSimpleCmd(cmd *cobra.Command, args []string) (err error) {
@@ -36,4 +36,3 @@ func runSimpleCmd(cmd *cobra.Command, args []string) (err error) {
 
 	return
 }
-
