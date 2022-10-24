@@ -8,3 +8,34 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/norwd/pword/badge)](https://www.codefactor.io/repository/github/norwd/pword)
 
 A small, command line password generator.
+
+## Installation
+
+Installing `pword` is as simple as using the Go module installer on the command
+line. If you already have Go installed, just run:
+
+```sh
+go install github.com/norwd/pword@latest
+```
+
+If you don't want to install the entire Go tool-chain, you can just download the
+binary directly from https://gobinaries.com for a smaller installation footprint
+using the following command:
+
+```sh
+curl -sf https://gobinaries.com/norwd/pword@latest | sh
+```
+
+### Installing From Source
+
+If you want to build `pword` locally or make modifications, you can clone this
+repo or [download](https://github.com/norwd/pword/archive/refs/heads/main.zip)
+the source onto your local machine.
+
+```sh
+git clone git@github.com:norwd/pword.git # Clone pword (or download source zip)
+cd pword                                 # Change directories to the source root
+go build                                 # Build the source
+./pword                                  # Run your local binary!
+cp pword ~/bin                           # (Optional) Install the binary to your $PATH
+```
