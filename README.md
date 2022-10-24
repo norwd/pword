@@ -9,6 +9,11 @@
 
 A small, command line password generator.
 
+Inspired by the [xkcd](https://xkcd.com/936) comic on password strength, `pword`
+is little password generator in the spirit of fun and interesting password
+strategies. It supports a variety of different password generation backends,
+including `pword xkcd`. For a full list see `pword --help`.
+
 ## Installation
 
 Installing `pword` is as simple as using the Go module installer on the command
