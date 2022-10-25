@@ -70,14 +70,14 @@ jobs:
           go-version: ${{ matrix.go }}
 
       - run: go build -v ./...
-      - run: go test -race -covermode atomic -coverprofile=cover.out -v ./...
+      - run: go test -race -covermode atomic -coverprofile "cover.out" -v ./...
 
       - if: matrix.go == '^1'
         env:
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           go install github.com/mattn/goveralls@latest
-          goveralls -coverprofile=cover.out -service=github
+          goveralls -coverprofile "cover.out" -service github
 
   # https://github.com/norwd/pword/issues/61#issuecomment-1289895789
   test-status:
