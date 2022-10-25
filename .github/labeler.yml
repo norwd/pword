@@ -13,3 +13,8 @@ documentation:
 chore:
   - "**.gitignore"
   - "**.gitattributes"
+
+test:
+  - "**/test/**"
+  - "**/tests/**"
+  - "**_test.*"
