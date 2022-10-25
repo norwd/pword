@@ -5,6 +5,7 @@ run-name: "Go workflow started by @${{ github.actor }}"
 permissions: read-all
 
 on:
+  push:
   pull_request:
     types:
       - opened
@@ -110,7 +111,8 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - if: github.event_name == 'pull_request'
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_author: norwd <106889957+norwd@users.noreply.github.com>
           commit_user_name: norwd
