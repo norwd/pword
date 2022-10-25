@@ -6,6 +6,7 @@
 [![Latest release](https://img.shields.io/github/v/release/norwd/pword?include_prereleases)](https://github.com/norwd/pword/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/norwd/pword)](https://goreportcard.com/report/github.com/norwd/pword)
 [![CodeFactor](https://www.codefactor.io/repository/github/norwd/pword/badge)](https://www.codefactor.io/repository/github/norwd/pword)
+[![Coverage Status](https://coveralls.io/repos/github/norwd/pword/badge.svg?branch=main)](https://coveralls.io/github/norwd/pword?branch=main)
 
 A small, command line password generator.
 
