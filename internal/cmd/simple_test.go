@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"testing"
+
+	"github.com/spf13/cobra"
 )
 
 func TestRunSimpleCmd(t *testing.T) {
