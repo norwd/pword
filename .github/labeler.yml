@@ -1,0 +1,20 @@
+#
+# Define automatically applied labels
+#
+
+---
+
+github:
+  - ".github/**"
+
+documentation:
+  - "**.md"
+
+chore:
+  - "**.gitignore"
+  - "**.gitattributes"
+
+test:
+  - "**/test/**"
+  - "**/tests/**"
+  - "**_test.*"

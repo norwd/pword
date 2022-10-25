@@ -8,21 +8,9 @@ tag-template: 'v$RESOLVED_VERSION'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&'
 
-autolabeler:
-  - label: 'github'
-    files:
-      - '.github/**'
-
-  - label: 'documentation'
-    files:
-      - '*.md'
-
-  - label: 'chore'
-    files:
-      - '.gitignore'
-      - '.gitattributes'
-      - '*.gitignore'
-      - '*.gitattributes'
+exclude-labels:
+  - 'skip-changelog'
+  - 'no-changelog'
 
 categories:
   - title: '🚀 Features'
