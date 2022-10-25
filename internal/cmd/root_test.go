@@ -2,9 +2,10 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"sync"
 	"testing"
+
+	"github.com/spf13/cobra"
 )
 
 var mu sync.Mutex
