@@ -1,24 +1,24 @@
 package cmd
 
 import (
-	"testing"
 	"fmt"
 	"github.com/spf13/cobra"
+	"testing"
 )
 
 func TestRunSimpleCmd(t *testing.T) {
-	tests := []struct{
+	tests := []struct {
 		name string
-		len int
-		err func (*testing.T, error)
+		len  int
+		err  func(*testing.T, error)
 	}{
-		{ name: "Zero Length", len: 0, err: nil },
+		{name: "Zero Length", len: 0, err: nil},
 	}
 
 	for _, test := range tests {
 		test := test
 
-		t.Run(test.name, func (t *testing.T) {
+		t.Run(test.name, func(t *testing.T) {
 			cmd := &cobra.Command{}
 
 			cmd.Flags().IntP("length", "l", test.len, "")
@@ -36,4 +36,3 @@ func TestRunSimpleCmd(t *testing.T) {
 		})
 	}
 }
-

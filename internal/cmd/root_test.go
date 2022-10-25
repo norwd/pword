@@ -1,27 +1,27 @@
 package cmd
 
 import (
-	"testing"
-	"sync"
 	"fmt"
 	"github.com/spf13/cobra"
+	"sync"
+	"testing"
 )
 
 var mu sync.Mutex
 
 func TestExecuteCallsRootCmd(t *testing.T) {
-	tests := []struct{
+	tests := []struct {
 		name string
-		err error
+		err  error
 	}{
-		{ name: "Without Error", err: nil },
-		{ name: "With Error", err: fmt.Errorf("expected error") },
+		{name: "Without Error", err: nil},
+		{name: "With Error", err: fmt.Errorf("expected error")},
 	}
 
 	for _, test := range tests {
 		test := test
 
-		t.Run(test.name, func (t *testing.T) {
+		t.Run(test.name, func(t *testing.T) {
 			mu.Lock()
 
 			defer func(cmd *cobra.Command) {
@@ -33,8 +33,8 @@ func TestExecuteCallsRootCmd(t *testing.T) {
 
 			rootCmd = &cobra.Command{
 				SilenceErrors: true,
-				SilenceUsage: true,
-				RunE: func (cmd *cobra.Command, args []string) error {
+				SilenceUsage:  true,
+				RunE: func(cmd *cobra.Command, args []string) error {
 					count++
 					return test.err
 				},
@@ -52,4 +52,3 @@ func TestExecuteCallsRootCmd(t *testing.T) {
 		})
 	}
 }
-

@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"github.com/norwd/pword/internal/cmd"
+	"os"
 )
 
 func main() {
