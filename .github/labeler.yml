@@ -15,6 +15,6 @@ chore:
   - "**.gitattributes"
 
 test:
-  - "**/test/**
-  - "**/tests/**
+  - "**/test/**"
+  - "**/tests/**"
   - "**_test.*"
