@@ -8,6 +8,10 @@ tag-template: 'v$RESOLVED_VERSION'
 change-template: '- $TITLE (#$NUMBER)'
 change-title-escapes: '\<*_&'
 
+exclude-labels:
+  - 'skip-changelog'
+  - 'no-changelog'
+
 categories:
   - title: '🚀 Features'
     collapse-after: 3
