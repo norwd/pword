@@ -1,7 +1,14 @@
 package main
 
-import "github.com/norwd/pword/internal/cmd"
+import (
+	"fmt"
+	"github.com/norwd/pword/internal/cmd"
+	"os"
+)
 
 func main() {
-	cmd.Execute()
+	if err := cmd.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
 }
