@@ -32,6 +32,8 @@ func TestExecuteCallsRootCmd(t *testing.T) {
 			var count int
 
 			rootCmd = &cobra.Command{
+				SilenceErrors: true,
+				SilenceUsage: true,
 				RunE: func (cmd *cobra.Command, args []string) error {
 					count++
 					return test.err
