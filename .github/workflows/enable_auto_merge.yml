@@ -9,12 +9,13 @@ on:
     types:
       - opened
       - reopened
+      - ready_for_review
 
 jobs:
   automerge:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: alexwilson/enable-github-automerge-action@1.0.0
         with:
-          github-token: ${{ secrets.AUTO_MERGE_PWORD }}
+          github-token: ${{ secrets.AUTO_MERGE_PWORD  || secrets.GITHUB_TOKEN }}

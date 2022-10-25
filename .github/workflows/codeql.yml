@@ -1,22 +1,13 @@
 ---
 
 name: "CodeQL"
-run-name: "CodeQL started by @${{ github.actor }}"
+run-name: "CodeQL Scheduled Analysis"
 on:
-  push:
-    branches:
-      - "main"
-
-  pull_request:
-    branches:
-      - "main"
-
   schedule:
     - cron: "0 0 * * 0"
 
 jobs:
   analyse:
-    name: Analyse
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -30,7 +21,7 @@ jobs:
           - "go"
 
     steps:
-      - uses: actions/checkout@v3.1.0
+      - uses: actions/checkout@v3
       - uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
