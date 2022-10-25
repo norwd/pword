@@ -60,7 +60,7 @@ jobs:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         go:
-          - '^1'   # Bleeding edge
+          - '^1' # Bleeding edge
           - '1.19' # Current
           - '1.18' # Supported
           - '1.16' # Historic and of interest
