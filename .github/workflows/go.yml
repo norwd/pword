@@ -57,6 +57,7 @@ jobs:
 
   test:
     strategy:
+      fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         go: ['^1', '1.19', '1.18', '1.16', '1.14']
@@ -69,7 +70,14 @@ jobs:
           go-version: ${{ matrix.go }}
 
       - run: go build -v ./...
-      - run: go test -v ./...
+      - run: go test -race -covermode atomic -coverprofile "cover.out" -v ./...
+
+      - if: matrix.go == '^1'
+        env:
+          COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          go install github.com/mattn/goveralls@latest
+          goveralls -coverprofile "cover.out" -service github
 
   # https://github.com/norwd/pword/issues/61#issuecomment-1289895789
   test-status:
