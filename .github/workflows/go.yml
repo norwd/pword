@@ -68,14 +68,16 @@ jobs:
           go build -v ./...
           go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 > gotest.log
 
-      - continue-on-error: true
+      - if: always()
+        continue-on-error: true
         env:
           GOTESTFMT_PACKG: github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
         run: |
           go install "$GOTESTFMT_PACKG"
           gotestfmt -input gotest.log
 
-      - continue-on-error: true
+      - if: always()
+        continue-on-error: true
         env:
           GOVERALLS_PACKG: github.com/mattn/goveralls@latest
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
