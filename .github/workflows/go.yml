@@ -64,8 +64,10 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
+      - run: go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
       - run: go build -v ./...
-      - run: go test -race -covermode atomic -coverprofile "cover.out" -v ./...
+      - run: |
+          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 | gotestfmt
 
       - if: matrix.go == '^1'
         env:
