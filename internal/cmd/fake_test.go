@@ -5,5 +5,5 @@ import (
 )
 
 func TestThatAlwaysFails(t *testing.T) {
-	t.Fail("Argghhhh")
+	t.Fail()
 }
