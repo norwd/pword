@@ -66,7 +66,7 @@ jobs:
 
       - run: |
           go build -v ./...
-          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 | tee /tmp/gotest.log
+          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 > /tmp/gotest.log
 
       - continue-on-error: true
         env:
