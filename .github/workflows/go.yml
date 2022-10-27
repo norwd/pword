@@ -64,7 +64,7 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-      - uses: GoTestTools/gotestfmt-action@v2
+      - uses: GoTestTools/gotestfmt-action@v2.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
