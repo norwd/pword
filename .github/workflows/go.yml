@@ -64,21 +64,32 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-      - env:
-          GOTESTCMD_FLAGS: -json -race -covermode atomic -coverprofile "cover.out" -v
+      - run: |
+          go build -v ./...
+          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 > gotest.log
+
+      - if: always()
+        continue-on-error: true
+        env:
           GOTESTFMT_PACKG: github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+        run: |
+          go install "$GOTESTFMT_PACKG"
+          gotestfmt -input gotest.log
+
+      - if: always()
+        continue-on-error: true
+        env:
           GOVERALLS_PACKG: github.com/mattn/goveralls@latest
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          go build -v ./...
-          go test $GOTESTCMD_FLAGS ./... 2>&1 | tee /tmp/gotest.log
-          go install "$GOTESTFMT_PACKG" && gotestfmt < /tmp/gotest.log
-          go install "$GOVERALLS_PACKG" && goveralls -coverprofile "cover.out" -service github
+          go install "$GOVERALLS_PACKG"
+          goveralls -coverprofile "cover.out" -service github
 
   # https://github.com/norwd/pword/issues/61#issuecomment-1289895789
   test-status:
     runs-on: ubuntu-latest
     needs: [test]
+    if: always()
     steps:
       - if: contains(needs.*.result, 'failure')
         run: exit 1
