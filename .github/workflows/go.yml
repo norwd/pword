@@ -66,14 +66,14 @@ jobs:
 
       - run: |
           go build -v ./...
-          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 > /tmp/gotest.log
+          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 > gotest.log
 
       - continue-on-error: true
         env:
           GOTESTFMT_PACKG: github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
         run: |
           go install "$GOTESTFMT_PACKG"
-          gotestfmt -input /tmp/gotest.log
+          gotestfmt -input gotest.log
 
       - continue-on-error: true
         env:
