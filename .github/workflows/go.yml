@@ -65,13 +65,12 @@ jobs:
           go-version: ${{ matrix.go }}
 
       - env:
-          GOTESTCMD_FLAGS: -json -race -covermode atomic -coverprofile "cover.out" -v
           GOTESTFMT_PACKG: github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
           GOVERALLS_PACKG: github.com/mattn/goveralls@latest
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           go build -v ./...
-          go test $GOTESTCMD_FLAGS ./... 2>&1 | tee /tmp/gotest.log
+          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 | tee /tmp/gotest.log
           go install "$GOTESTFMT_PACKG" && gotestfmt < /tmp/gotest.log
           go install "$GOVERALLS_PACKG" && goveralls -coverprofile "cover.out" -service github
 
