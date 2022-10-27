@@ -80,6 +80,7 @@ jobs:
   test-status:
     runs-on: ubuntu-latest
     needs: [test]
+    if: always()
     steps:
       - if: ${{ !(contains(needs.*.result, 'failure')) }}
         run: exit 0
