@@ -70,14 +70,7 @@ jobs:
 
       - run: |
           go build -v ./...
-          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
-
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: test-log
-          path: /tmp/gotest.log
-          if-no-files-found: error
+          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 | gotestfmt
 
       - if: matrix.go == '^1'
         env:
