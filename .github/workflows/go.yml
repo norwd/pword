@@ -75,7 +75,7 @@ jobs:
       - name: Test
         if: matrix.go != '1.14' && matrix.os != 'windows-latest'
         run: |
-          go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest        
+          go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
           go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
 
       - name: Upload Coverage
