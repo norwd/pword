@@ -64,25 +64,26 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-      - run: |
-          go build -v ./...
-          go test -json -race -covermode atomic -coverprofile "cover.out" -v ./... 2>&1 > gotest.log
+      - name: Build
+        run: go build -v ./...
 
-      - if: always()
-        continue-on-error: true
-        env:
-          GOTESTFMT_PACKG: github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+      - name: Test (Legacy)
+        if: matrix.go == '1.14' || matrix.os == 'windows-latest'
         run: |
-          go install "$GOTESTFMT_PACKG"
-          gotestfmt -input gotest.log
+          go test -v -race -covermode atomic -coverprofile "cover.out" ./...
 
-      - if: always()
+      - name: Test
+        if: matrix.go != '1.14' && matrix.os != 'windows-latest'
+        run: |
+          go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+          go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
+
+      - name: Upload Coverage
         continue-on-error: true
         env:
-          GOVERALLS_PACKG: github.com/mattn/goveralls@latest
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          go install "$GOVERALLS_PACKG"
+          go install github.com/mattn/goveralls@latest
           goveralls -coverprofile "cover.out" -service github
 
   # https://github.com/norwd/pword/issues/61#issuecomment-1289895789
