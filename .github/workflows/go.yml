@@ -67,7 +67,7 @@ jobs:
       - name: Build
         run: go build -v ./...
 
-      - name: Test
+      - name: Test (Legacy)
         if: matrix.go == '1.14' || matrix.os == 'windows-latest'
         run: |
           go test -v -race -covermode atomic -coverprofile "cover.out" ./...
