@@ -8,6 +8,7 @@ on:
 
 jobs:
   analyse:
+    name: Run Codeql Analysis
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -21,13 +22,19 @@ jobs:
           - "go"
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: github/codeql-action/init@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Initialise
+        uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
           queries: +security-extended,security-and-quality
 
-      - uses: github/codeql-action/autobuild@v2
-      - uses: github/codeql-action/analyze@v2
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v2
+
+      - name: Analyse
+        uses: github/codeql-action/analyze@v2
         with:
           category: "/language:${{matrix.language}}"
