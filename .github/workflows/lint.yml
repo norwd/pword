@@ -10,7 +10,7 @@ on:
 jobs:
 
   markdown:
-    name: Lint Markdown 
+    name: Lint Markdown
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,7 +23,7 @@ jobs:
           dot: true
 
   yaml:
-    name: Lint Yaml 
+    name: Lint Yaml
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
