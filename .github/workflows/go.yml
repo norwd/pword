@@ -104,6 +104,9 @@ jobs:
             /c/Users/runneradmin/go/bin/goveralls
             \c\Users\runneradmin\go\bin\goveralls
             C:\Users\runneradmin\go\bin\goveralls
+            /c/Users/runner/go/bin/goveralls
+            \c\Users\runner\go\bin\goveralls
+            C:\Users\runner\go\bin\goveralls
             C:\hostedtoolcache\windows\go\**\bin\goveralls
 
       - name: Install goveralls
@@ -125,6 +128,9 @@ jobs:
             /c/Users/runneradmin/go/bin/gotestfmt
             \c\Users\runneradmin\go\bin\gotestfmt
             C:\Users\runneradmin\go\bin\gotestfmt
+            /c/Users/runner/go/bin/gotestfmt
+            \c\Users\runner\go\bin\gotestfmt
+            C:\Users\runner\go\bin\gotestfmt
             C:\hostedtoolcache\windows\go\**\bin\gotestfmt
 
       - name: Install gotestfmt
