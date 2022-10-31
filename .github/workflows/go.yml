@@ -96,7 +96,9 @@ jobs:
         id: cache-goveralls
         with:
           key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
-          path: ${{ env.GOPATH }}/goveralls
+          path: |
+            ~/go/bin/goveralls
+            ~\go\bin\goveralls
 
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
@@ -108,7 +110,9 @@ jobs:
         id: cache-gotestfmt
         with:
           key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
-          path: ${{ env.GOPATH }}/gotestfmt
+          path: |
+            ~/go/bin/gotestfmt
+            ~\go\bin\gotestfmt
 
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
