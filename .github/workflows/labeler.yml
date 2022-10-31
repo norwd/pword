@@ -2,19 +2,19 @@
 
 name: "Pull Request Labeler"
 run-name: "Assigning labels for #${{ github.event.number }}"
-permissions: read-all
+permissions:
+  pull-requests: write
 
 on:
   - pull_request_target
 
 jobs:
   label:
-    permissions:
-      pull-requests:
-        write
+    name: Label Pull Request
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/labeler@v4
+      - name: Add Labels
+        uses: actions/labeler@v4
         with:
           repo-token: "${{ secrets.AUTO_LABEL_PWORD || secrets.GITHUB_TOKEN }}"
           sync-labels: true
