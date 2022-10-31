@@ -89,33 +89,35 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           doskey tee=Tee-Object
-          doskey where=Where.exe
+          doskey which=Where.exe
 
       - name: Restore goveralls from Cache
         uses: actions/cache@v3
         id: cache-goveralls
         with:
-          path: /home/runner/go/bin/goveralls
           key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
+          path: |
+            /home/runner/go/bin/goveralls
 
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
         run: |
           go install github.com/mattn/goveralls@latest
-          where goveralls
+          which goveralls
 
       - name: Restore gotestfmt from Cache
         uses: actions/cache@v3
         id: cache-gotestfmt
         with:
-          path: /home/runner/go/bin/gotestfmt
           key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
+          path: |
+            /home/runner/go/bin/gotestfmt
 
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
         run: |
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
-          where gotestfmt
+          which gotestfmt
 
       - name: Build
         run: |
