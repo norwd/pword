@@ -95,49 +95,25 @@ jobs:
         uses: actions/cache@v3
         id: cache-goveralls
         with:
-          key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
-          path: |
-            /home/runner/go/bin/goveralls
-            /Users/runner/go/bin/goveralls
-            ~/go/bin/goveralls
-            ~\go\bin\goveralls
-            /c/Users/runneradmin/go/bin/goveralls
-            \c\Users\runneradmin\go\bin\goveralls
-            C:\Users\runneradmin\go\bin\goveralls
-            /c/Users/runner/go/bin/goveralls
-            \c\Users\runner\go\bin\goveralls
-            C:\Users\runner\go\bin\goveralls
-            C:\hostedtoolcache\windows\go\**\bin\goveralls
+          path: ~/go/bin/goveralls
+          key: ${{ runner.os }}-go${{ matrix.go }}-goveralls
 
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
         run: |
           go install github.com/mattn/goveralls@latest
-          which goveralls
 
       - name: Restore gotestfmt from Cache
         uses: actions/cache@v3
         id: cache-gotestfmt
         with:
-          key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
-          path: |
-            /home/runner/go/bin/gotestfmt
-            /Users/runner/go/bin/gotestfmt
-            ~/go/bin/gotestfmt
-            ~\go\bin\gotestfmt
-            /c/Users/runneradmin/go/bin/gotestfmt
-            \c\Users\runneradmin\go\bin\gotestfmt
-            C:\Users\runneradmin\go\bin\gotestfmt
-            /c/Users/runner/go/bin/gotestfmt
-            \c\Users\runner\go\bin\gotestfmt
-            C:\Users\runner\go\bin\gotestfmt
-            C:\hostedtoolcache\windows\go\**\bin\gotestfmt
+          path: ~/go/bin/gotestfmt
+          key: ${{ runner.os }}-go${{ matrix.go }}-gotestfmt
 
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
         run: |
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
-          which gotestfmt
 
       - name: Build
         run: |
