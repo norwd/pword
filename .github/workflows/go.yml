@@ -86,7 +86,7 @@ jobs:
           go-version: ${{ matrix.go }}
 
       - name: Setup Windows Environment
-        if: matrix.os == 'windows-latest'
+        if: runner.os == 'Windows'
         run: |
           doskey tee=Tee-Object
           doskey which=Where.exe
