@@ -196,6 +196,7 @@ jobs:
 
   report:
     name: Update Go Report Card
+    needs: [lint, vet, fmt]
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Report Generation
