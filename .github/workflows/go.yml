@@ -72,7 +72,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
-        go: ['^1', '1.19', '1.18', '1.16', '1.14']
+        go: ['^1', '1.19', '1.18', '1.16']
 
     name: Run tests on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -92,13 +92,8 @@ jobs:
           path: /home/runner/go/bin/goveralls
           key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
 
-      - name: Install goveralls (Legacy)
-        if: steps.cache-goveralls.outputs.cache-hit != 'true' && matrix.go == '1.14'
-        run: |
-          go get github.com/mattn/goveralls@latest
-
       - name: Install goveralls
-        if: steps.cache-goveralls.outputs.cache-hit != 'true' && matrix.go != '1.14'
+        if: steps.cache-goveralls.outputs.cache-hit != 'true'
         run: |
           go install github.com/mattn/goveralls@latest
 
@@ -109,26 +104,20 @@ jobs:
           path: /home/runner/go/bin/gotestfmt
           key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
 
-      - name: Install gotestfmt (Legacy)
-        if: steps.cache-gotestfmt.outputs.cache-hit != 'true' && matrix.go == '1.14'
-        run: |
-          go get github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
-
       - name: Install gotestfmt
-        if: steps.cache-gotestfmt.outputs.cache-hit != 'true' && matrix.go != '1.14'
+        if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
         run: |
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
 
       - name: Build
         run: go build -v ./...
 
-      - name: Test (Legacy)
-        if: matrix.go == '1.14' || matrix.os == 'windows-latest'
-        run: |
-          go test -v -race -covermode atomic -coverprofile "cover.out" ./...
+      - name: Test (Windows)
+        if: matrix.os == 'windows-latest'
+        run: go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | Tee-Object gotest.log | gotestfmt
 
-      - name: Test
-        if: matrix.go != '1.14' && matrix.os != 'windows-latest'
+      - name: Test (Unix)
+        if: && matrix.os != 'windows-latest'
         run: go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
 
       - name: Upload Test Coverage
@@ -138,7 +127,6 @@ jobs:
         run: |
           goveralls -coverprofile "cover.out" -service github
 
-  # https://github.com/norwd/pword/issues/61#issuecomment-1289895789
   test-status:
     name: Check All Tests Pass
     runs-on: ubuntu-latest
