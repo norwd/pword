@@ -119,7 +119,6 @@ jobs:
           doskey tee=Tee-Object
 
       - name: Test
-        if: matrix.os != 'windows-latest'
         run: |
           go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
 
