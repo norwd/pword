@@ -98,6 +98,8 @@ jobs:
           key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
           path: |
             /home/runner/go/bin/goveralls
+            /Users/runner/go/bin/goveralls
+            /c/Users/runneradmin/go/bin/gotestfmt
 
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
@@ -112,6 +114,8 @@ jobs:
           key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
           path: |
             /home/runner/go/bin/gotestfmt
+            /Users/runner/go/bin/gotestfmt
+            /c/Users/runneradmin/go/bin/gotestfmt
 
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
