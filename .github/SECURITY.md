@@ -21,4 +21,4 @@ whatever application they want. If you find an issue or vunerability, please,
 let me know. Open an issue or better yet, a pull request, I'd be thrilled to
 merge it.
 
-[general security policy]: https://github.com/norwd/.github/blob/main/SECURITY.md
+[general security policy]: https://github.com/norwd/.github/security/policy
