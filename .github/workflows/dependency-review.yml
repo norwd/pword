@@ -22,7 +22,11 @@ permissions:
 
 jobs:
   dependency-review:
+    name: Dependency Review
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/dependency-review-action@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Review Dependencies
+        uses: actions/dependency-review-action@v2
