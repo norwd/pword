@@ -92,8 +92,13 @@ jobs:
           path: /home/runner/go/bin/goveralls
           key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
 
+      - name: Install goveralls (Legacy)
+        if: steps.cache-goveralls.outputs.cache-hit != 'true' && matrix.go == '1.14'
+        run: |
+          go get github.com/mattn/goveralls@latest
+
       - name: Install goveralls
-        if: steps.cache-goveralls.outputs.cache-hit != 'true'
+        if: steps.cache-goveralls.outputs.cache-hit != 'true' && matrix.go != '1.14'
         run: |
           go install github.com/mattn/goveralls@latest
 
@@ -104,8 +109,13 @@ jobs:
           path: /home/runner/go/bin/gotestfmt
           key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
 
+      - name: Install gotestfmt (Legacy)
+        if: steps.cache-gotestfmt.outputs.cache-hit != 'true' && matrix.go == '1.14'
+        run: |
+          go get github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+
       - name: Install gotestfmt
-        if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
+        if: steps.cache-gotestfmt.outputs.cache-hit != 'true' && matrix.go != '1.14'
         run: |
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
 
