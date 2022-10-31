@@ -85,6 +85,30 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
+      - name: Restore goveralls from Cache
+        uses: actions/cache@v3
+        id: cache-goveralls
+        with:
+          path: /home/runner/go/bin/goveralls
+          key: ${{ runner.os }}-goveralls
+
+      - name: Install goveralls
+        if: steps.cache-goveralls.outputs.cache-hit != 'true'
+        run: |
+          go install github.com/mattn/goveralls@latest
+
+      - name: Restore gotestfmt from Cache
+        uses: actions/cache@v3
+        id: cache-gotestfmt
+        with:
+          path: /home/runner/go/bin/gotestfmt
+          key: ${{ runner.os }}-gotestfmt
+
+      - name: Install gotestfmt
+        if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
+        run: |
+          go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+
       - name: Build
         run: go build -v ./...
 
@@ -95,16 +119,13 @@ jobs:
 
       - name: Test
         if: matrix.go != '1.14' && matrix.os != 'windows-latest'
-        run: |
-          go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
-          go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
+        run: go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
 
       - name: Upload Test Coverage
         continue-on-error: true
         env:
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          go install github.com/mattn/goveralls@latest
           goveralls -coverprofile "cover.out" -service github
 
   # https://github.com/norwd/pword/issues/61#issuecomment-1289895789
@@ -140,14 +161,13 @@ jobs:
         uses: actions/cache@v3
         id: cache-goimports
         with:
-          path: goimports
+          path: /home/runner/go/bin/goimports
           key: ${{ runner.os }}-goimports
 
       - name: Install goimports
         if: steps.cache-goimports.outputs.cache-hit != 'true'
         run: |
           go install golang.org/x/tools/cmd/goimports@latest
-          command -v goimports
 
       - name: Run gofmt
         run: gofmt -l -w -s .
