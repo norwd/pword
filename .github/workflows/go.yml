@@ -110,15 +110,18 @@ jobs:
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
 
       - name: Build
-        run: go build -v ./...
+        run: |
+          go build -v ./...
 
-      - name: Test (Windows)
+      - name: Setup Windows Environment
         if: matrix.os == 'windows-latest'
-        run: go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | Tee-Object gotest.log | gotestfmt
+        run: |
+          doskey tee=Tee-Object
 
-      - name: Test (Unix)
-        if: && matrix.os != 'windows-latest'
-        run: go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
+      - name: Test
+        if: matrix.os != 'windows-latest'
+        run: |
+          go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
 
       - name: Upload Test Coverage
         continue-on-error: true
