@@ -104,6 +104,7 @@ jobs:
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
         run: |
           go install github.com/mattn/goveralls@latest
+          which goveralls
 
       - name: Restore gotestfmt from Cache
         uses: actions/cache@v3
@@ -118,6 +119,7 @@ jobs:
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
         run: |
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
+          which gotestfmt
 
       - name: Build
         run: |
