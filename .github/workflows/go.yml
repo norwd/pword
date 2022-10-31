@@ -99,6 +99,8 @@ jobs:
           path: |
             /home/runner/go/bin/goveralls
             /Users/runner/go/bin/goveralls
+            /c/Users/runneradmin/go/bin/goveralls
+            \c\Users\runneradmin\go\bin\goveralls
             C:\Users\runneradmin\go\bin\goveralls
 
       - name: Install goveralls
@@ -115,6 +117,8 @@ jobs:
           path: |
             /home/runner/go/bin/gotestfmt
             /Users/runner/go/bin/gotestfmt
+            /c/Users/runneradmin/go/bin/gotestfmt
+            \c\Users\runneradmin\go\bin\gotestfmt
             C:\Users\runneradmin\go\bin\gotestfmt
 
       - name: Install gotestfmt
