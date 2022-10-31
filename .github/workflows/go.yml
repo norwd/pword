@@ -97,7 +97,8 @@ jobs:
         with:
           key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
           path: |
-            ~/go/bin/goveralls
+            /home/runner/go/bin/goveralls
+            /Users/runner/go/bin/goveralls
             C:\Users\runneradmin\go\bin\goveralls
 
       - name: Install goveralls
@@ -112,7 +113,8 @@ jobs:
         with:
           key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
           path: |
-            ~/go/bin/gotestfmt
+            /home/runner/go/bin/gotestfmt
+            /Users/runner/go/bin/gotestfmt
             C:\Users\runneradmin\go\bin\gotestfmt
 
       - name: Install gotestfmt
