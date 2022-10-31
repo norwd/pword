@@ -90,7 +90,7 @@ jobs:
         id: cache-goveralls
         with:
           path: /home/runner/go/bin/goveralls
-          key: ${{ runner.os }}-goveralls
+          key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
 
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
@@ -102,7 +102,7 @@ jobs:
         id: cache-gotestfmt
         with:
           path: /home/runner/go/bin/gotestfmt
-          key: ${{ runner.os }}-gotestfmt
+          key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
 
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
