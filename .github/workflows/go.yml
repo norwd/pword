@@ -200,7 +200,7 @@ jobs:
           commit_options: -s -S
 
   report:
-    name: Update Go Report Card
+    name: Run Go Report Card
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -215,8 +215,13 @@ jobs:
         uses: actions/cache@v3
         id: cache-goreportcard-bin
         with:
-          path: /home/runner/go/bin/**
           key: ${{ runner.os }}-goreportcard-bin
+          path: |
+            /home/runner/go/bin/gometalinter
+            /home/runner/go/bin/golint
+            /home/runner/go/bin/gocyclo
+            /home/runner/go/bin/ineffassign
+            /home/runner/go/bin/misspell
 
       - name: Install goreportcard Tools
         if: steps.cache-goreportcard-bin.outputs.cache-hit != 'true'
