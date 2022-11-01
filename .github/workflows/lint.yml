@@ -53,3 +53,24 @@ jobs:
 
       - name: Check EditorConfig
         uses: editorconfig-checker/action-editorconfig-checker@v1.0.0
+
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Check Workflow Files
+        uses: docker://rhysd/actionlint:latest
+        with:
+          args: -color
+
+      # TODO: Possibily use direct executable with caching?
+      # - name: Download actionlint
+      #   id: get_actionlint
+      #   run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+      #   shell: bash
+      # 
+      # - name: Check Workflow Files
+      #   shell: bash
+      #   run: ${{ steps.get_actionlint.outputs.executable }} -color
