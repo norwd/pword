@@ -212,15 +212,15 @@ jobs:
         with:
           go-version: '^1'
 
-      - name: Restore goreportcard-cli from Cache
+      - name: Restore goreportcard Tools from Cache
         uses: actions/cache@v3
-        id: cache-goreportcard-cli
+        id: cache-goreportcard-bin
         with:
-          path: /home/runner/go/bin/goreportcard-cli
-          key: ${{ runner.os }}-goreportcard-cli
+          path: /home/runner/go/bin/**
+          key: ${{ runner.os }}-goreportcard-bin
 
-      - name: Install goreportcard-cli
-        if: steps.cache-goreportcard-cli.outputs.cache-hit != 'true'
+      - name: Install goreportcard Tools
+        if: steps.cache-goreportcard-bin.outputs.cache-hit != 'true'
         shell: bash
         run: |
           git clone https://github.com/gojp/goreportcard.git
