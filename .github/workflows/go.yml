@@ -227,6 +227,7 @@ jobs:
           cd goreportcard
           make install
           go install ./cmd/goreportcard-cli
+          cd ..
 
       - name: Run Report
         shell: bash
