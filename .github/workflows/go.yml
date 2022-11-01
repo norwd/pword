@@ -216,13 +216,7 @@ jobs:
         id: cache-goreportcard-bin
         with:
           key: ${{ runner.os }}-goreportcard-bin
-          path: |
-            ~/go/bin/goreportcard-cli
-            ~/go/bin/gometalinter
-            ~/go/bin/golint
-            ~/go/bin/gocyclo
-            ~/go/bin/ineffassign
-            ~/go/bin/misspell
+          path: '~/go/bin/**'
 
       - name: Install goreportcard Tools
         if: steps.cache-goreportcard-bin.outputs.cache-hit != 'true'
