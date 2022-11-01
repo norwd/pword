@@ -71,7 +71,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'macos-latest', 'windows-latest', 'linux-latest']
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
         go: ['^1', '1.19', '1.18', '1.16']
 
     name: Run tests on ${{ matrix.os }}
