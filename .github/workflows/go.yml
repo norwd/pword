@@ -217,6 +217,7 @@ jobs:
         with:
           key: ${{ runner.os }}-goreportcard-bin
           path: |
+            /home/runner/go/bin/goreportcard-cli
             /home/runner/go/bin/gometalinter
             /home/runner/go/bin/golint
             /home/runner/go/bin/gocyclo
