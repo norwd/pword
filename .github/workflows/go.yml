@@ -231,7 +231,7 @@ jobs:
       - name: Run Report
         shell: bash
         run: |
-          goreportcard-cli
+          goreportcard-cli -v
 
       - name: Trigger Report Badge Generation
         if: github.ref == 'refs/heads/main'
