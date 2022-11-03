@@ -48,7 +48,7 @@ jobs:
           go-version: '^1'
 
       - name: Run golint
-        uses: Jerome1337/golint-action@v1.0.2
+        uses: Jerome1337/golint-action@v1.0.3
         with:
           golint-path: '.'
 
