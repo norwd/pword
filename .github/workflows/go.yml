@@ -190,7 +190,7 @@ jobs:
           git_commit_gpgsign: true
 
       - name: Push Refatored Files
-        if: github.ref != 'refs/heads/main'
+        if: github.ref != 'refs/heads/main' && github.actor != 'dependabotdependabot[bot]'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_author: norwd <106889957+norwd@users.noreply.github.com>
