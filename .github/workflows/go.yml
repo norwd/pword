@@ -182,6 +182,7 @@ jobs:
         run: goimports -w .
 
       - name: Setup GPG Keys
+        continue-on-error: true
         uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.AUTO_COMMIT_GPG_PRIVATE_KEY_PWORD }}
@@ -189,8 +190,15 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
-      - name: Push Refatored Files
-        if: github.ref != 'refs/heads/main'
+      - name: Check for Changes
+        id: changes
+        uses: tj-actions/verify-changed-files@v12
+        with:
+          files: |
+             **/*.go
+
+      - name: Push Changes
+        if: steps.changes.outputs.files_changed == 'true' && github.ref != 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_author: norwd <106889957+norwd@users.noreply.github.com>
