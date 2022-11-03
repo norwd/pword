@@ -189,7 +189,7 @@ jobs:
              **/*.go
 
       - name: Setup GPG Keys
-        if: steps.verify-changed-files.outputs.files_changed == 'true' && github.actor != 'dependabotdependabot[bot]'
+        continue-on-error: true
         uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.AUTO_COMMIT_GPG_PRIVATE_KEY_PWORD }}
