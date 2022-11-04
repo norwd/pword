@@ -61,7 +61,7 @@ jobs:
       - name: Archive Version Numbers
         uses: actions/upload-artifact@v3
         with:
-          name: commit-data
+          name: version-data
           path: |
             version-old.txt
             version-new.txt
