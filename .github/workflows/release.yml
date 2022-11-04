@@ -79,7 +79,7 @@ jobs:
             -F target_commitish='${{ github.ref_name }}' \
             -F name='${{ steps.version.outputs.next }} 🔑🔒💻' \
             -F body='' \
-            -F draft=true \
+            -F draft=false \
             -F prerelease=true \
             -F generate_release_notes=true \
             "/repos/${{ github.repository }}/releases"
