@@ -12,24 +12,9 @@ on:
 jobs:
 
   publish:
-
     name: 'Publish a Release'
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
-      checks: write
-      contents: write
-      deployments: write
-      id-token: write
-      issues: write
-      discussions: write
-      packages: write
-      pages: write
-      pull-requests: write
-      repository-projects: write
-      security-events: write
-      statuses: write
-
+    permissions: write-all
     steps:
 
       - name: Checkout
@@ -58,28 +43,29 @@ jobs:
           echo "prev=$(cat version-old.txt)" >> "${GITHUB_OUTPUT}"
           echo "next=$(cat version-new.txt)" >> "${GITHUB_OUTPUT}"
 
-      - name: Archive Version Numbers
-        uses: actions/upload-artifact@v3
-        with:
-          name: commit-data
-          path: |
-            version-old.txt
-            version-new.txt
-
       - name: Release ${{ steps.version.outputs.next }}
         if: steps.version.outputs.prev != steps.version.outputs.next
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            -F tag_name='${{ steps.version.outputs.next }}' \
-            -F target_commitish='${{ github.ref_name }}' \
-            -F name='${{ steps.version.outputs.next }} 🔑🔒💻' \
-            -F body='' \
-            -F draft=false \
-            -F prerelease=true \
-            -F generate_release_notes=true \
-            "/repos/${{ github.repository }}/releases"
+          gh release create ${{ steps.version.outputs.next }} \
+            --title '${{ steps.version.outputs.next }} 🔑🔒💻' \
+            --generate-notes \
+            --prerelease \
+            --target main | tee release.txt
+
+      - name: Archive Version Numbers
+        uses: actions/upload-artifact@v3
+        with:
+          name: version-data
+          path: |
+            version-old.txt
+            version-new.txt
+
+      - name: Archive API Responses
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-data
+          path: |
+            release.txt
