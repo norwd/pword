@@ -45,8 +45,8 @@ jobs:
           pword   --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > tee version-old.txt
           ./pword --version | tr '[:space:]' '\n  | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > tee version-new.txt
 
-          echo "prev=$(cat version-old.txt)" >> '${GITHUB_OUTPUT}'
-          echo "next=$(cat version-new.txt)" >> '${GITHUB_OUTPUT}'
+          echo "prev=$(cat version-old.txt)" >> ${GITHUB_OUTPUT}
+          echo "next=$(cat version-new.txt)" >> ${GITHUB_OUTPUT}
 
       - name: Archive Version Numbers
         uses: actions/upload-artifact@v3
