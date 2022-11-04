@@ -49,17 +49,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh api \
-            --method POST \
-            -H "Accept: application/vnd.github+json" \
-            -F tag_name='${{ steps.version.outputs.next }}' \
-            -F target_commitish='${{ github.ref_name }}' \
-            -F name='${{ steps.version.outputs.next }} 🔑🔒💻' \
-            -F body='' \
-            -F draft=false \
-            -F prerelease=true \
-            -F generate_release_notes=true \
-            "/repos/${{ github.repository }}/releases" > release.json
+          gh release create ${{ steps.version.outputs.next }} \
+            --title '${{ steps.version.outputs.next }} 🔑🔒💻' \
+            --generate-notes \
+            --prerelease \
+            --target main | tee release.txt
 
       - name: Archive Version Numbers
         uses: actions/upload-artifact@v3
@@ -74,4 +68,4 @@ jobs:
         with:
           name: api-data
           path: |
-            release.json
+            release.txt
