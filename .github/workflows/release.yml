@@ -43,14 +43,6 @@ jobs:
           echo "prev=$(cat version-old.txt)" >> "${GITHUB_OUTPUT}"
           echo "next=$(cat version-new.txt)" >> "${GITHUB_OUTPUT}"
 
-      - name: Archive Version Numbers
-        uses: actions/upload-artifact@v3
-        with:
-          name: version-data
-          path: |
-            version-old.txt
-            version-new.txt
-
       - name: Release ${{ steps.version.outputs.next }}
         if: steps.version.outputs.prev != steps.version.outputs.next
         shell: bash
@@ -67,4 +59,19 @@ jobs:
             -F draft=false \
             -F prerelease=true \
             -F generate_release_notes=true \
-            "/repos/${{ github.repository }}/releases"
+            "/repos/${{ github.repository }}/releases" > release.json
+
+      - name: Archive Version Numbers
+        uses: actions/upload-artifact@v3
+        with:
+          name: version-data
+          path: |
+            version-old.txt
+            version-new.txt
+
+      - name: Archive API Responses
+        uses: actions/upload-artifact@v3
+        with:
+          name: api-data
+          path: |
+            release.json
