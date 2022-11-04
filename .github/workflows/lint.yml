@@ -66,13 +66,13 @@ jobs:
         id: cache-actionlint
         with:
           key: ${{ runner.os }}-actionlint
-          path: '~/go/bin/**'
+          path: './actionlint'
 
-      - name: Install
+      - name: Install Actionlint Tools
         if: steps.cache-actionlint.outputs.cache-hit != 'true'
         shell: bash
-        run: go install github.com/rhysd/actionlint/cmd/actionlint@latest
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
 
       - name: Check Workflow Files
         shell: bash
-        run: actionlint -color
+        run: ./actionlint -color
