@@ -75,4 +75,4 @@ jobs:
 
       - name: Check Workflow Files
         shell: bash
-        run: ./actionlint -color -shellcheck=
+        run: ./actionlint -color
