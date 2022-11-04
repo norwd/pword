@@ -42,6 +42,8 @@ jobs:
         id: version
         shell: bash
         run: |
+          # shellcheck disable=SC1073
+
           pword   --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > tee version-old.txt
           ./pword --version | tr '[:space:]' '\n  | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > tee version-new.txt
 
