@@ -1,0 +1,73 @@
+---
+
+name: "Release"
+run-name: "Release workflow started by @${{ github.actor }}"
+permissions: read-all
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  publish:
+
+    name: 'Publish a new Release'
+    runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+      discussions: write
+      packages: write
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1'
+
+      - name: Install Latest
+        shell: bash
+        run: go install github.com/norwd/pword@latest
+
+      - name: Build
+        shell: bash
+        run: go build .
+
+      - name: Determine Version
+        id: version
+        shell: bash
+        run: |
+          pword   --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > tee version-old.txt
+          ./pword --version | tr '[:space:]' '\n  | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > tee version-new.txt
+
+          echo "prev=$(cat version-old.txt)" >> "${GITHUB_OUTPUT}"
+          echo "next=$(cat version-new.txt)" >> "${GITHUB_OUTPUT}"
+
+      - name: Archive Version Numbers
+        uses: actions/upload-artifact@v3
+        with:
+          name: commit-data
+          path: |
+            version-old.txt
+            version-new.txt
+
+      - name: Release ${{ steps.version.outputs.next }}
+        if: steps.version.outputs.prev != steps.version.outputs.next
+        shell: bash
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -F tag_name='${{ steps.version.outputs.next }}' \
+            -F target_commitish='${{ github.ref_name }}' \
+            -F name='${{ steps.version.outputs.next }} 🔑🔒💻' \
+            -F body='' \
+            -F draft=true \
+            -F prerelease=true \
+            -F generate_release_notes=true \
+            "/repos/${{ github.repository }}/releases"
