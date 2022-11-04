@@ -61,7 +61,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Check Workflow Files
-        uses: docker://rhysd/actionlint:latest
+      - name: Restore Actionlint Tools from Cache
+        uses: actions/cache@v3
+        id: cache-actionlint
         with:
-          args: -color
+          key: ${{ runner.os }}-actionlint
+          path: './actionlint'
+
+      - name: Install Actionlint Tools
+        if: steps.cache-actionlint.outputs.cache-hit != 'true'
+        shell: bash
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+
+      - name: Check Workflow Files
+        shell: bash
+        run: ./actionlint -color -shellcheck=
