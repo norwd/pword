@@ -13,7 +13,7 @@ jobs:
 
   publish:
 
-    name: 'Publish a new Release'
+    name: 'Publish a Release'
     runs-on: ubuntu-latest
     permissions:
       deployments: write
@@ -43,10 +43,10 @@ jobs:
         shell: bash
         run: |
           pword   --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > version-old.txt
-          ./pword --version | tr '[:space:]' '\n  | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > version-new.txt
+          ./pword --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > version-new.txt
 
-          echo "prev=$(cat version-old.txt)" >> "$GITHUB_OUTPUT"
-          echo "next=$(cat version-new.txt)" >> "$GITHUB_OUTPUT"
+          echo "prev=$(cat version-old.txt)" >> "${GITHUB_OUTPUT}"
+          echo "next=$(cat version-new.txt)" >> "${GITHUB_OUTPUT}"
 
       - name: Archive Version Numbers
         uses: actions/upload-artifact@v3
