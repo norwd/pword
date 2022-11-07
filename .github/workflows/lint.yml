@@ -32,11 +32,7 @@ jobs:
       - name: Lint YAML Files
         uses: ibiqlik/action-yamllint@v3
         with:
-          file_or_dir: |
-            **.yaml
-            **.yml
-            **.cff
-
+          file_or_dir: "**.yaml **.yml **.cff"
           strict: true
           format: parsable
           config_data: |
