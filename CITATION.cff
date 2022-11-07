@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+type: software
+license: Unlicense
+title: pword
+abstract: A small, command line password generator.
+message: If you use this software, please cite it as below.
+url: 'https://github.com/norwd/pword#readme'
+repository-code: 'https://github.com/norwd/pword'
+repository-artifact: 'https://gobinaries.com/norwd/pword@latest'
+authors:
+  - family-names: Meyer-Norwood
+    given-names: Yuri
+keywords:
+  - go
+  - golang
+  - passwords
+  - password-generator
