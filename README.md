@@ -45,3 +45,16 @@ go build                                 # Build the source
 ./pword                                  # Run your local binary!
 cp pword ~/bin                           # (Optional) Install the binary
 ```
+
+## Security
+
+*Be sure to also read my [security policy]*
+
+This a relatively small project, intended to explore password generation
+techniques, especially in relation to memorability while maintaining high
+entropy. However, security is still a high priority. I am not qualified  to say
+that passwords produced by `pword` are secure to one degree or another, but I do
+believe that they are secure enough for low risk applications; throw-away reddit
+accounts or a one time signup to a random web site.
+
+[security policy]: https://github.com/norwd/pword/security/policy
