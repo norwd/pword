@@ -9,7 +9,7 @@ on:
     branches: ['main']
     paths: ['internal/cmd/version.go']
 
-concurrency: 
+concurrency:
   group: release
   cancel-in-progress: true
 
