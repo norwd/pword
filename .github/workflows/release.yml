@@ -6,8 +6,12 @@ permissions: read-all
 
 on:
   push:
-    branches:
-      - main
+    branches: ['main']
+    paths: ['internal/cmd/version.go']
+
+concurrency: 
+  group: release
+  cancel-in-progress: true
 
 jobs:
 
