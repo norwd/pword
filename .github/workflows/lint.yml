@@ -7,7 +7,27 @@ permissions: read-all
 on:
   push:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
+
+  citations:
+    name: Lint Citations
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup
+        run: |
+          python3 -m pip install --user cffconvert
+
+      - name: Validate
+        run: |
+          cffconvert --validate
 
   markdown:
     name: Lint Markdown
@@ -53,3 +73,24 @@ jobs:
 
       - name: Check EditorConfig
         uses: editorconfig-checker/action-editorconfig-checker@v1.0.0
+
+  actionlint:
+    name: Lint Actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Restore Actionlint Tools from Cache
+        uses: actions/cache@v3
+        id: cache-actionlint
+        with:
+          key: ${{ runner.os }}-actionlint
+          path: './actionlint'
+
+      - name: Install Actionlint Tools
+        if: steps.cache-actionlint.outputs.cache-hit != 'true'
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+
+      - name: Check Workflow Files
+        run: ./actionlint -color

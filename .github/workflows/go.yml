@@ -7,6 +7,10 @@ permissions: read-all
 on:
   push:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
 
   analyse:
@@ -48,7 +52,7 @@ jobs:
           go-version: '^1'
 
       - name: Run golint
-        uses: Jerome1337/golint-action@v1.0.2
+        uses: Jerome1337/golint-action@v1.0.3
         with:
           golint-path: '.'
 
@@ -89,8 +93,8 @@ jobs:
         uses: actions/cache@v3
         id: cache-goveralls
         with:
-          path: /home/runner/go/bin/goveralls
-          key: ${{ matrix.os }}-go${{ matrix.go }}-goveralls
+          path: ~/go/bin/goveralls
+          key: ${{ runner.os }}-goveralls
 
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
@@ -101,8 +105,8 @@ jobs:
         uses: actions/cache@v3
         id: cache-gotestfmt
         with:
-          path: /home/runner/go/bin/gotestfmt
-          key: ${{ matrix.os }}-go${{ matrix.go }}-gotestfmt
+          path: ~/go/bin/gotestfmt
+          key: ${{ runner.os }}-gotestfmt
 
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
@@ -112,11 +116,6 @@ jobs:
       - name: Build
         run: |
           go build -v ./...
-
-      - name: Setup Windows Environment
-        if: matrix.os == 'windows-latest'
-        run: |
-          doskey tee=Tee-Object
 
       - name: Test
         run: |
@@ -176,6 +175,7 @@ jobs:
         run: goimports -w .
 
       - name: Setup GPG Keys
+        continue-on-error: true
         uses: crazy-max/ghaction-import-gpg@v5
         with:
           gpg_private_key: ${{ secrets.AUTO_COMMIT_GPG_PRIVATE_KEY_PWORD }}
@@ -183,8 +183,15 @@ jobs:
           git_user_signingkey: true
           git_commit_gpgsign: true
 
-      - name: Push Refatored Files
-        if: github.ref != 'refs/heads/main'
+      - name: Check for Changes
+        id: changes
+        uses: tj-actions/verify-changed-files@v12
+        with:
+          files: |
+             **/*.go
+
+      - name: Push Changes
+        if: steps.changes.outputs.files_changed == 'true' && github.ref != 'refs/heads/main'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_author: norwd <106889957+norwd@users.noreply.github.com>
@@ -194,9 +201,39 @@ jobs:
           commit_options: -s -S
 
   report:
-    name: Update Go Report Card
+    name: Run Go Report Card
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Report Generation
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1'
+
+      - name: Restore goreportcard Tools from Cache
+        uses: actions/cache@v3
+        id: cache-goreportcard-bin
+        with:
+          key: ${{ runner.os }}-goreportcard-bin
+          path: '~/go/bin/**'
+
+      - name: Install goreportcard Tools
+        if: steps.cache-goreportcard-bin.outputs.cache-hit != 'true'
+        run: |
+          git clone https://github.com/gojp/goreportcard.git
+          cd goreportcard
+          make install
+          go install ./cmd/goreportcard-cli
+          cd ..
+          rm -rf goreportcard
+
+      - name: Run Report
+        run: |
+          goreportcard-cli -v
+
+      - name: Generate Report Badge
         if: github.ref == 'refs/heads/main'
-        uses: creekorful/goreportcard-action@v1.0
+        run: |
+          curl -X POST -F "repo=github.com/$GITHUB_REPOSITORY" https://goreportcard.com/checks

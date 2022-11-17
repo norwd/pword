@@ -3,7 +3,7 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/norwd/pword.svg)](https://pkg.go.dev/github.com/norwd/pword)
 [![License](https://img.shields.io/github/license/norwd/pword)](https://github.com/norwd/pword/blob/main/LICENSE)
 [![Go version](https://img.shields.io/github/go-mod/go-version/norwd/pword)](https://github.com/norwd/pword/blob/main/go.mod)
-[![Latest release](https://img.shields.io/github/v/release/norwd/pword?include_prereleases)](https://github.com/norwd/pword/releases)
+[![Latest release](https://img.shields.io/github/v/release/norwd/pword?include_prereleases)](https://github.com/norwd/pword/releases/latest)
 [![Go Report Card](https://goreportcard.com/badge/github.com/norwd/pword)](https://goreportcard.com/report/github.com/norwd/pword)
 [![CodeFactor](https://www.codefactor.io/repository/github/norwd/pword/badge)](https://www.codefactor.io/repository/github/norwd/pword)
 [![Coverage Status](https://coveralls.io/repos/github/norwd/pword/badge.svg?branch=main)](https://coveralls.io/github/norwd/pword?branch=main)
@@ -45,3 +45,16 @@ go build                                 # Build the source
 ./pword                                  # Run your local binary!
 cp pword ~/bin                           # (Optional) Install the binary
 ```
+
+## Security
+
+*Be sure to also read my [security policy]*
+
+This a relatively small project, intended to explore password generation
+techniques, especially in relation to memorability while maintaining high
+entropy. However, security is still a high priority. I am not qualified  to say
+that passwords produced by `pword` are secure to one degree or another, but I do
+believe that they are secure enough for low risk applications; throw-away reddit
+accounts or a one time signup to a random web site.
+
+[security policy]: https://github.com/norwd/pword/security/policy

@@ -9,6 +9,10 @@ github:
 
 documentation:
   - "**.md"
+  - "**.cff"
+
+citation:
+  - "**.cff"
 
 chore:
   - "**.gitignore"
