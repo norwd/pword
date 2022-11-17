@@ -45,6 +45,9 @@ jobs:
         run: |
           gh version
 
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
       - name: "Create and Checkout branch"
         run: |
           gh issue develop --base "$GITHUB_REF" --checkout "$ISSUE_ID"
