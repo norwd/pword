@@ -1,7 +1,7 @@
 ---
 
 name: "Issue Development"
-run-name: "Starting Pull Request for #${{ github.event.number }}"
+run-name: "Starting Pull Request for #${{ github.event.issue.number }}"
 permissions:
   issues: write
 
@@ -21,8 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      ISSUE_ID: ${{ github.event.number }}
-      PR_TITLE: ${{ github.event.title }}
+      ISSUE_ID: ${{ github.event.issue.number }}
+      PR_TITLE: ${{ github.event.issue.title }}
       PR_DESCR: |
         # ${{ github.event.title }}
 
