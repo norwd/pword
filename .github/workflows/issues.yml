@@ -32,6 +32,15 @@ jobs:
         run: |
           gh version
 
+      - name: "Install gh tool"
+        run: |
+          sudo apt-get update
+          sudo apt-get install gh
+
+      - name: "Check `gh` version again"
+        run: |
+          gh version
+
       - name: "Create and Checkout branch"
         run: |
           gh issue develop --base "$GITHUB_REF" --checkout "$ISSUE_ID"
