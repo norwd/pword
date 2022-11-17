@@ -63,6 +63,7 @@ jobs:
 
       - name: "Create empty commit on new branch"
         run: |
+          git remote set-url origin https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git config user.name norwd
           git config user.email 106889957+norwd@users.noreply.github.com
           git config author.name norwd
