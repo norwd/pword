@@ -1,0 +1,37 @@
+---
+
+name: "Issue Development"
+run-name: "Starting Pull Request for #${{ github.event.number }}"
+permissions:
+  issues: write
+
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  branch_and_open_pr:
+    name: "Creating Development Branch and PR"
+    runs-on: ubuntu-latest
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ISSUE_ID: ${{ github.event.number }}
+        PR_TITLE: ${{ github.event.title }}
+        PR_DESCR: |
+          # ${{ github.event.title }}
+
+          Closes #${{ github.event.number }}
+    steps:
+      - name: "Create and Checkout branch"
+        run: |
+          gh issue develop --base "$GITHUB_REF" --checkout "$ISSUE_ID"
+
+      - name: "Create and Draft pr"
+        run: |
+          gh pr create --draft --assignee "${{ github.actor }}" --base "$GITHUB_REF" --title "$PR_TITLE" --body "$PR_DESCR"
