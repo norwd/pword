@@ -9,6 +9,13 @@ on:
     branches: ['main']
     paths: ['internal/cmd/version.go']
 
+defaults:
+  run:
+    shell: bash
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 concurrency:
   group: release
   cancel-in-progress: true
@@ -30,16 +37,13 @@ jobs:
           go-version: '^1'
 
       - name: Install Latest
-        shell: bash
         run: go install github.com/norwd/pword@latest
 
       - name: Build
-        shell: bash
         run: go build .
 
       - name: Determine Version
         id: version
-        shell: bash
         run: |
           pword   --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > version-old.txt
           ./pword --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > version-new.txt
@@ -49,9 +53,6 @@ jobs:
 
       - name: Release ${{ steps.version.outputs.next }}
         if: steps.version.outputs.prev != steps.version.outputs.next
-        shell: bash
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release create ${{ steps.version.outputs.next }} \
             --title '${{ steps.version.outputs.next }} 🔑🔒💻' \
