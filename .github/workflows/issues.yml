@@ -28,6 +28,10 @@ jobs:
 
         Closes #${{ github.event.number }}
     steps:
+      - name: "Check `gh` version"
+        run: |
+          gh version
+
       - name: "Create and Checkout branch"
         run: |
           gh issue develop --base "$GITHUB_REF" --checkout "$ISSUE_ID"
