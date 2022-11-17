@@ -62,13 +62,13 @@ jobs:
           git_commit_gpgsign: true
 
       - name: "Create empty commit on new branch"
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_author: norwd <106889957+norwd@users.noreply.github.com>
-          commit_user_name: norwd
-          commit_user_email: 106889957+norwd@users.noreply.github.com
-          commit_message: "Begin development for #${{ github.event.issue.number }}"
-          commit_options: "-s -S --allow-empty"
+        run: |
+          git config user.name norwd
+          git config user.email 106889957+norwd@users.noreply.github.com
+          git config author.name norwd
+          git config author.email 106889957+norwd@users.noreply.github.com
+          git commit --allow-empty -s -S -m "Begin development for #${{ github.event.issue.number }}"
+          git push
 
       - name: "Create and Draft pr"
         run: |
