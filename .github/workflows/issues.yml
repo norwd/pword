@@ -24,7 +24,7 @@ jobs:
       ISSUE_ID: ${{ github.event.issue.number }}
       PR_TITLE: ${{ github.event.issue.title }}
       PR_DESCR: |
-        # ${{ github.event.title }}
+        # ${{ github.event.issue.title }}
 
         Closes #${{ github.event.number }}
     steps:
