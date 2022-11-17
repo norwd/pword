@@ -7,6 +7,10 @@ permissions: read-all
 on:
   push:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
 
   analyse:
@@ -65,7 +69,6 @@ jobs:
           go-version: '^1'
 
       - name: Run govet
-        shell: bash
         run: go vet
 
   test:
@@ -95,7 +98,6 @@ jobs:
 
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
-        shell: bash
         run: |
           go install github.com/mattn/goveralls@latest
 
@@ -108,17 +110,14 @@ jobs:
 
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
-        shell: bash
         run: |
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest
 
       - name: Build
-        shell: bash
         run: |
           go build -v ./...
 
       - name: Test
-        shell: bash
         run: |
           go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee gotest.log | gotestfmt
 
@@ -126,7 +125,6 @@ jobs:
         continue-on-error: true
         env:
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        shell: bash
         run: |
           goveralls -coverprofile "cover.out" -service github
 
@@ -138,11 +136,9 @@ jobs:
     steps:
       - name: Tests Passed
         if: ${{ !contains(needs.*.result, 'failure') }}
-        shell: bash
         run: exit 0
       - name: Tests Failed
         if: ${{ contains(needs.*.result, 'failure') }}
-        shell: bash
         run: exit 1
 
   fmt:
@@ -169,16 +165,13 @@ jobs:
 
       - name: Install goimports
         if: steps.cache-goimports.outputs.cache-hit != 'true'
-        shell: bash
         run: |
           go install golang.org/x/tools/cmd/goimports@latest
 
       - name: Run gofmt
-        shell: bash
         run: gofmt -l -w -s .
 
       - name: Run goimports
-        shell: bash
         run: goimports -w .
 
       - name: Setup GPG Keys
@@ -228,7 +221,6 @@ jobs:
 
       - name: Install goreportcard Tools
         if: steps.cache-goreportcard-bin.outputs.cache-hit != 'true'
-        shell: bash
         run: |
           git clone https://github.com/gojp/goreportcard.git
           cd goreportcard
@@ -238,12 +230,10 @@ jobs:
           rm -rf goreportcard
 
       - name: Run Report
-        shell: bash
         run: |
           goreportcard-cli -v
 
       - name: Generate Report Badge
         if: github.ref == 'refs/heads/main'
-        shell: bash
         run: |
           curl -X POST -F "repo=github.com/$GITHUB_REPOSITORY" https://goreportcard.com/checks
