@@ -20,7 +20,7 @@ jobs:
     name: "Creating Development Branch and PR"
     runs-on: ubuntu-latest
     env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.PWORD_ISSUE_DEVELOP }}
       ISSUE_ID: ${{ github.event.issue.number }}
       PR_TITLE: ${{ github.event.issue.title }}
       PR_DESCR: |
