@@ -26,7 +26,7 @@ jobs:
       PR_DESCR: |
         # ${{ github.event.issue.title }}
 
-        Closes #${{ github.event.number }}
+        Closes #${{ github.event.issue.number }}
     steps:
       - name: "Check `gh` version"
         run: |
