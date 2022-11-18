@@ -93,8 +93,11 @@ jobs:
         uses: actions/cache@v3
         id: cache-goveralls
         with:
-          path: ~/go/bin/goveralls
           key: ${{ runner.os }}-goveralls
+          path: |
+            ~/go/bin/goveralls
+            /c/Users/runneradmin/go/bin/goveralls
+            C:\\Users\\runneradmin\\go\\bin\\goveralls
 
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
@@ -105,8 +108,11 @@ jobs:
         uses: actions/cache@v3
         id: cache-gotestfmt
         with:
-          path: ~/go/bin/gotestfmt
           key: ${{ runner.os }}-gotestfmt
+          path: |
+            ~/go/bin/gotestfmt
+            /c/Users/runneradmin/go/bin/gotestfmt
+            C:\\Users\\runneradmin\\go\\bin\\gotestfmt
 
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
