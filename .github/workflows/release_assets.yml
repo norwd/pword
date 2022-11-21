@@ -6,7 +6,7 @@ permissions: read-all
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 defaults:
   run:
