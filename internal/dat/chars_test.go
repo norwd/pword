@@ -34,7 +34,7 @@ func TestAllCharacterClassesAreComplete(t *testing.T) {
 			matches := regex.FindAllString(class, -1)
 
 			if have := strings.Join(matches, ""); class != have {
-				t.Errorf("Not all listed characters are matched by class: want %q but have %q", class, have)
+				t.Errorf("Unmatched chars: want %q but have %q", class, have)
 			}
 		})
 	}

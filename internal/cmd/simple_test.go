@@ -45,7 +45,7 @@ func TestSimpleCmdOnlyDefinesFlagsForValidCharacterClasses(t *testing.T) {
 		}
 
 		if _, ok := dat.CharacterClasses[last]; !ok {
-			t.Errorf("unexpected flag %q does not match known character class", flag)
+			t.Errorf("unexpected flag %q, no matching character class", flag)
 		}
 	}
 }

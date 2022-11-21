@@ -1,5 +1,7 @@
 package dat
 
+import "strings"
+
 type CharacterClass []rune
 
 var CharacterClasses = map[string]CharacterClass{
@@ -13,6 +15,13 @@ var CharacterClasses = map[string]CharacterClass{
 	"digit":  CharacterClass("0123456789"),
 	"cntrl":  CharacterClass(""), // TODO: [\x00-\x1F\x7F]
 	"blank":  CharacterClass(" \t"),
-	"alpha":  CharacterClass("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"),
-	"alnum":  CharacterClass("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"),
+	"alpha": CharacterClass(strings.Join([]string{
+		"abcdefghijklmnopqrstuvwxyz",
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+	})),
+	"alnum": CharacterClass(strings.Join([]string{
+		"abcdefghijklmnopqrstuvwxyz",
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		"0123456789",
+	})),
 }
