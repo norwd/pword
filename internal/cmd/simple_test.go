@@ -2,10 +2,53 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
+	"github.com/norwd/pword/internal/dat"
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
+
+func getSimpleCmdFlags() []string {
+	flags := make([]string, 0)
+
+	simpleCmd.Flags().VisitAll(func(flag *pflag.Flag) {
+		flags = append(flags, flag.Name)
+	})
+
+	return flags
+}
+
+func TestSimpleCmdDefinesFlagsForAllCharacterClasses(t *testing.T) {
+	for name := range dat.CharacterClasses {
+		if simpleCmd.Flags().Lookup("include-"+name) == nil {
+			t.Errorf("expected --include-%s flag, but none found", name)
+		}
+		if simpleCmd.Flags().Lookup("no-include-"+name) == nil {
+			t.Errorf("expected --no-include-%s flag, but none found", name)
+		}
+	}
+}
+
+func TestSimpleCmdOnlyDefinesFlagsForValidCharacterClasses(t *testing.T) {
+	for _, flag := range getSimpleCmdFlags() {
+		if !strings.Contains(flag, "include-") {
+			continue // Not a character inclusion/exclusion flag
+		}
+
+		parts := strings.Split(flag, "-")
+		last := parts[len(parts)-1]
+
+		if last == "custom" {
+			continue // Custom character set is not in predefined list
+		}
+
+		if _, ok := dat.CharacterClasses[last]; !ok {
+			t.Errorf("unexpected flag %q does not match known character class", flag)
+		}
+	}
+}
 
 func TestRunSimpleCmd(t *testing.T) {
 	tests := []struct {
