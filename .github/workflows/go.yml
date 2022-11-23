@@ -191,7 +191,7 @@ jobs:
         uses: tj-actions/verify-changed-files@v12
         with:
           files: |
-             **/*.go
+            **/*.go
 
       - name: Push Changes
         if: steps.changes.outputs.files_changed == 'true' && github.ref != 'refs/heads/main'
