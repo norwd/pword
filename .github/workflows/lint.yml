@@ -69,7 +69,7 @@ jobs:
         uses: norwd/fmtya@v1
         with:
           # yamlfmt settings
-          include: |
+          include-files: |
             **.yaml
             **.yml
             **.cff
