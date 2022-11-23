@@ -53,13 +53,7 @@ jobs:
         if: steps.version.outputs.prev != steps.version.outputs.next
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create ${{ steps.version.outputs.next }} \
-            --title '${{ steps.version.outputs.next }} 🔑🔒💻' \
-            --generate-notes \
-            --prerelease \
-            --target main | tee release.txt
-
+        run: "gh release create ${{ steps.version.outputs.next }} \\\n  --title '${{ steps.version.outputs.next }} \U0001F511\U0001F512\U0001F4BB' \\\n  --generate-notes \\\n  --prerelease \\\n  --target main | tee release.txt\n  #magic___^_^___line\n"
       - name: Archive Version Numbers
         uses: actions/upload-artifact@v3
         with:
