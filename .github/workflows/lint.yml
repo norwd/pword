@@ -68,6 +68,13 @@ jobs:
         if: github.ref != 'refs/heads/main'
         uses: norwd/fmtya@v1
         with:
+          # yamlfmt settings
+          include: |
+            **.yaml
+            **.yml
+            **.cff
+
+          # committer settings
           token: ${{ secrets.AUTO_YAML_FMT_PWORD }}
           commit-user-name: norwd
           commit-user-email: 106889957+norwd@users.noreply.github.com
