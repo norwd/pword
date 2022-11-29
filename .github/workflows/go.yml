@@ -84,17 +84,18 @@ jobs:
     name: Run tests on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}-latest
     steps:
-      - name: Begin Summary
-        run: |
-          echo '# Tests Results on ${{ matrix.os }} go v${{ matrix.go }}' >> "${GITHUB_STEP_SUMMARY}"
-
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup Go
+        id: setup-go
         uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go }}
+
+      - name: Begin Summary
+        run: |
+          echo '# Tests Results on ${{ runner.os }} (Go${{ steps.setup-go.outputs.go-version }})' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Restore goveralls from Cache
         uses: actions/cache@v3
@@ -130,7 +131,7 @@ jobs:
         run: |
           echo '## Build Log' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          go build -v ./... | tee -a "${GITHUB_STEP_SUMMARY}"
+          go build -v ./... 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Test
@@ -147,7 +148,7 @@ jobs:
         run: |
           echo '## Coverage Report' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          goveralls -coverprofile "cover.out" -service github
+          goveralls -coverprofile "cover.out" -service github | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
   test-status:
