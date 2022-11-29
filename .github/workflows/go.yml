@@ -69,7 +69,12 @@ jobs:
           go-version: '^1'
 
       - name: Run govet
-        run: go vet
+        run: |
+          # shellcheck disable=SC2016
+          echo '# Run `go vet`' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          go vet 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
   test:
     strategy:
@@ -95,7 +100,7 @@ jobs:
 
       - name: Begin Summary
         run: |
-          echo '# Tests Results on ${{ runner.os }} (Go${{ steps.setup-go.outputs.go-version }})' >> "${GITHUB_STEP_SUMMARY}"
+          echo '# Run `go test` on Go${{ steps.setup-go.outputs.go-version }}-${{ runner.os }}' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Restore goveralls from Cache
         uses: actions/cache@v3
@@ -179,6 +184,11 @@ jobs:
         with:
           go-version: '^1'
 
+      - name: Begin Summary
+        run: |
+          # shellcheck disable=SC2016
+          echo '# Run `gofmt` and `goimports`' >> "${GITHUB_STEP_SUMMARY}"
+
       - name: Restore goimports from Cache
         uses: actions/cache@v3
         id: cache-goimports
@@ -189,7 +199,11 @@ jobs:
       - name: Install goimports
         if: steps.cache-goimports.outputs.cache-hit != 'true'
         run: |
-          go install golang.org/x/tools/cmd/goimports@latest
+          # shellcheck disable=SC2016
+          echo '## Tool Installation (`goimports`)' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          go install golang.org/x/tools/cmd/goimports@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Run gofmt
         run: gofmt -l -w -s .
@@ -235,6 +249,11 @@ jobs:
         with:
           go-version: '^1'
 
+      - name: Begin Summary
+        run: |
+          # shellcheck disable=SC2016
+          echo '# Run `goreportcard`' >> "${GITHUB_STEP_SUMMARY}"
+
       - name: Restore goreportcard Tools from Cache
         uses: actions/cache@v3
         id: cache-goreportcard-bin
@@ -245,18 +264,30 @@ jobs:
       - name: Install goreportcard Tools
         if: steps.cache-goreportcard-bin.outputs.cache-hit != 'true'
         run: |
-          git clone https://github.com/gojp/goreportcard.git
-          cd goreportcard
-          make install
-          go install ./cmd/goreportcard-cli
-          cd ..
-          rm -rf goreportcard
+          # shellcheck disable=SC2016
+          echo '## Tool Installation (`goreportcard`)' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          (
+            git clone https://github.com/gojp/goreportcard.git
+            cd goreportcard
+            make install
+            go install ./cmd/goreportcard-cli
+            cd ..
+            rm -rf goreportcard
+          ) 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Run Report
         run: |
-          goreportcard-cli -v
+          echo '## Run Report' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          goreportcard-cli -v 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Generate Report Badge
         if: github.ref == 'refs/heads/main'
         run: |
-          curl -X POST -F "repo=github.com/$GITHUB_REPOSITORY" https://goreportcard.com/checks
+          echo '## Generate Report Card Badge' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          curl -X POST -F "repo=github.com/$GITHUB_REPOSITORY" https://goreportcard.com/checks 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
