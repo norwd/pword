@@ -267,6 +267,7 @@ jobs:
         run: |
           # shellcheck disable=SC2016
           echo '## Tool Installation (`goreportcard`)' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
           (
             git clone https://github.com/gojp/goreportcard.git
             (
@@ -276,6 +277,7 @@ jobs:
             )
             rm -rf goreportcard
           ) 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Run Report
         run: |
