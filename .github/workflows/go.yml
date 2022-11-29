@@ -102,10 +102,10 @@ jobs:
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
         run: |
-          echo "## Tool Installation (`goveralls`)" >> "${GITHUB_STEP_SUMMARY}"
-          echo "```" >> "${GITHUB_STEP_SUMMARY}"
+          echo '## Tool Installation (`goveralls`)' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
           go install github.com/mattn/goveralls@latest | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo "```" >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Restore gotestfmt from Cache
         uses: actions/cache@v3
@@ -117,24 +117,24 @@ jobs:
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
         run: |
-          echo "## Tool Installation (`gotestfmt`)" >> "${GITHUB_STEP_SUMMARY}"
-          echo "```" >> "${GITHUB_STEP_SUMMARY}"
+          echo '## Tool Installation (`gotestfmt`)' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo "```" >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Build
         run: |
-          echo "## Build Log" >> "${GITHUB_STEP_SUMMARY}"
-          echo "```" >> "${GITHUB_STEP_SUMMARY}"
+          echo '## Build Log' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
           go build -v ./...
-          echo "```" >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Test
         run: |
-          echo "## Test Results " >> "${GITHUB_STEP_SUMMARY}"
-          echo "```" >> "${GITHUB_STEP_SUMMARY}"
+          echo '## Test Results' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
           go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}" | gotestfmt
-          echo "```" >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Upload Test Coverage
         continue-on-error: true
