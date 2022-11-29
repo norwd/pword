@@ -109,7 +109,7 @@ jobs:
         run: |
           echo '## Tool Installation (`goveralls`)' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          go install github.com/mattn/goveralls@latest | tee -a "${GITHUB_STEP_SUMMARY}"
+          go install github.com/mattn/goveralls@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Restore gotestfmt from Cache
@@ -124,7 +124,7 @@ jobs:
         run: |
           echo '## Tool Installation (`gotestfmt`)' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest | tee -a "${GITHUB_STEP_SUMMARY}"
+          go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Build
