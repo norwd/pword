@@ -147,9 +147,7 @@ jobs:
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo '## Coverage Report' >> "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
           goveralls -coverprofile "cover.out" -service github | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
   test-status:
     name: Check All Tests Pass
