@@ -267,26 +267,15 @@ jobs:
         run: |
           # shellcheck disable=SC2016
           echo '## Tool Installation (`goreportcard`)' >> "${GITHUB_STEP_SUMMARY}"
-
-          echo '### Clone' >> "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          git clone https://github.com/gojp/goreportcard.git 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-
-          echo '### Build' >> "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          (cd goreportcard/ && make install) 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-
-          echo '### Install' >> "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          (cd goreportcard/ && go install ./cmd/goreportcard-cli) 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-
-          echo '### Cleanup' >> "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          rm -rf goreportcard 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          (
+            git clone https://github.com/gojp/goreportcard.git
+            (
+              cd goreportcard/
+              make install
+              go install ./cmd/goreportcard-cli
+            )
+            rm -rf goreportcard
+          ) 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
 
       - name: Run Report
         run: |
