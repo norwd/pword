@@ -100,6 +100,7 @@ jobs:
 
       - name: Begin Summary
         run: |
+          # shellcheck disable=SC2016
           echo '# Run `go test` on Go${{ steps.setup-go.outputs.go-version }}-${{ runner.os }}' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Restore goveralls from Cache
