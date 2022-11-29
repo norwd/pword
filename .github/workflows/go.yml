@@ -107,6 +107,7 @@ jobs:
       - name: Install goveralls
         if: steps.cache-goveralls.outputs.cache-hit != 'true'
         run: |
+          # shellcheck disable=SC2016
           echo '## Tool Installation (`goveralls`)' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
           go install github.com/mattn/goveralls@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
@@ -122,6 +123,7 @@ jobs:
       - name: Install gotestfmt
         if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
         run: |
+          # shellcheck disable=SC2016
           echo '## Tool Installation (`gotestfmt`)' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
           go install github.com/gotesttools/gotestfmt/v2/cmd/gotestfmt@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
