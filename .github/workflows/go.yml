@@ -280,7 +280,7 @@ jobs:
 
           echo '### Install' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          go install goreportcard/cmd/goreportcard-cli 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          go install ./goreportcard/cmd/goreportcard-cli 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
           echo '### Cleanup' >> "${GITHUB_STEP_SUMMARY}"
