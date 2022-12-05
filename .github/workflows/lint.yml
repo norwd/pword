@@ -53,6 +53,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Format YAML Files
+        if: github.ref != 'refs/heads/main'
+        uses: norwd/fmtya@v1
+        with:
+
+          # yamlfmt settings
+          include-files: |
+            **.yaml
+            **.yml
+            **.cff
+
+          # committer settings
+          commit-user-name: norwd
+          commit-user-email: 106889957+norwd@users.noreply.github.com
+          signing-private-key: ${{ secrets.AUTO_COMMIT_GPG_PRIVATE_KEY_PWORD }}
+          signing-passphrase: ${{ secrets.AUTO_COMMIT_GPG_PASSPHRASE_PWORD }}
+
       - name: Lint YAML Files
         uses: ibiqlik/action-yamllint@v3
         with:
@@ -67,22 +84,6 @@ jobs:
                 allowed-values:
                   - "true"
                   - "false"
-
-      - name: Format YAML Files
-        if: github.ref != 'refs/heads/main'
-        uses: norwd/fmtya@v1
-        with:
-          # yamlfmt settings
-          include-files: |
-            **.yaml
-            **.yml
-            **.cff
-
-          # committer settings
-          commit-user-name: norwd
-          commit-user-email: 106889957+norwd@users.noreply.github.com
-          signing-private-key: ${{ secrets.AUTO_COMMIT_GPG_PRIVATE_KEY_PWORD }}
-          signing-passphrase: ${{ secrets.AUTO_COMMIT_GPG_PASSPHRASE_PWORD }}
 
   editorconfig:
     name: Check Against EditorConfig
