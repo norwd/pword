@@ -42,7 +42,7 @@ jobs:
           files: "**/*.md"
           dot: true
 
-  yaml:  
+  yaml:
     name: Lint Yaml
     runs-on: ubuntu-latest
     permissions:
