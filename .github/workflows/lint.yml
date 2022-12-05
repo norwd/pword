@@ -45,6 +45,10 @@ jobs:
   yaml:
     name: Lint Yaml
     runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -75,7 +79,6 @@ jobs:
             **.cff
 
           # committer settings
-          token: ${{ secrets.AUTO_YAML_FMT_PWORD }}
           commit-user-name: norwd
           commit-user-email: 106889957+norwd@users.noreply.github.com
           signing-private-key: ${{ secrets.AUTO_COMMIT_GPG_PRIVATE_KEY_PWORD }}
