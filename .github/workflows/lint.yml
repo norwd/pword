@@ -57,7 +57,7 @@ jobs:
         if: github.ref != 'refs/heads/main'
         uses: norwd/fmtya@v1
         with:
-        
+
           # github settings
           token: ${{ secrets.AUTO_YAML_FMT_PWORD }}
 
@@ -103,7 +103,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-       ACTIONLINT_INSTALLER_URL: https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash
+      ACTIONLINT_INSTALLER_URL: https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash
 
     steps:
       - name: Checkout
