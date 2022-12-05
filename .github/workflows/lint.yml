@@ -60,9 +60,9 @@ jobs:
 
           # yamlfmt settings
           include-files: |
-            **.yaml
-            **.yml
-            **.cff
+            **/*.yaml
+            **/*.yml
+            **/*.cff
 
           # committer settings
           commit-user-name: norwd
