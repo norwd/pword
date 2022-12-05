@@ -57,6 +57,9 @@ jobs:
         if: github.ref != 'refs/heads/main'
         uses: norwd/fmtya@v1
         with:
+        
+          # github settings
+          token: ${{ secrets.AUTO_YAML_FMT_PWORD }}
 
           # yamlfmt settings
           include-files: |
