@@ -98,6 +98,10 @@ jobs:
   actionlint:
     name: Lint Actions
     runs-on: ubuntu-latest
+
+    env:
+       ACTIONLINT_INSTALLER_URL: https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -111,7 +115,7 @@ jobs:
 
       - name: Install Actionlint Tools
         if: steps.cache-actionlint.outputs.cache-hit != 'true'
-        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+        run: bash <(curl "$ACTIONLINT_INSTALLER_URL")
 
       - name: Check Workflow Files
         run: ./actionlint -color
