@@ -55,7 +55,7 @@ jobs:
 
       - name: Format YAML Files
         if: github.ref != 'refs/heads/main'
-        uses: norwd/fmtya@v1.1.6
+        uses: norwd/fmtya@v1.1.8
         with:
 
           # github settings
