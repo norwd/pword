@@ -77,7 +77,7 @@ jobs:
 
     steps:
       - name: Release ${{ needs.new-version.outputs.version }}
-        run: "gh release create ${{ needs.new-version.outputs.version }} --title '${{ needs.new-version.outputs.version }} \U0001F511\U0001F512\U0001F4BB' --generate-notes --prerelease --target main --repo \"${{ github.repository }}\""
+        run: gh release create '${{ needs.new-version.outputs.version }}' --title '${{ needs.new-version.outputs.version }} \U0001F511\U0001F512\U0001F4BB' --generate-notes --prerelease --target main --repo '${{ github.repository }}'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
