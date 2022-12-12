@@ -19,16 +19,16 @@ concurrency:
 
 jobs:
 
-  publish:
-    name: 'Publish a Release'
+  old-version:
+    name: "Get Current Version"
     runs-on: ubuntu-latest
-    permissions: write-all
-    outputs:
-      version: ${{ steps.version.outputs.next }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    permissions:
+      contents: read
 
+    outputs:
+      version: ${{ steps.version.outputs.old }}
+
+    steps:
       - name: Setup Go
         uses: actions/setup-go@v3
         with:
@@ -37,24 +37,52 @@ jobs:
       - name: Install Latest
         run: go install github.com/norwd/pword@latest
 
+      - name: Determine Version
+        id: version
+        run: echo "old=$(pword --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$')" | tee -a "${GITHUB_OUTPUT}"
+
+  new-version:
+    name: "Get Upcoming Version"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    outputs:
+      version: ${{ steps.version.outputs.new }}
+
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1'
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Build
         run: go build .
 
       - name: Determine Version
         id: version
-        run: |
-          pword   --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > version-old.txt
-          ./pword --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$' > version-new.txt
+        run: echo "new=$(./pword --version | tr '[:space:]' '\n' | grep '^v[0-9]\+\.[0-9]\+\.[0-9]\+$')" | tee -a "${GITHUB_OUTPUT}"
 
-          echo "prev=$(cat version-old.txt)" | tee -a "${GITHUB_OUTPUT}"
-          echo "next=$(cat version-new.txt)" | tee -a "${GITHUB_OUTPUT}"
+  publish:
+    needs: [old-version, new-version]
+    name: 'Publish a Release'
+    runs-on: ubuntu-latest
+    if: needs.old-version.outputs.version != needs.new-version.outputs.version
+    permissions: write-all
+    outputs:
+      version: ${{ needs.new-version.outputs.version }}
 
-      - name: Release ${{ steps.version.outputs.next }}
-        if: steps.version.outputs.prev != steps.version.outputs.next
+    steps:
+      - name: Release ${{ needs.new-version.outputs.version }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create ${{ steps.version.outputs.next }} --title '${{ steps.version.outputs.next }} \U0001F511\U0001F512\U0001F4BB' --generate-notes --prerelease --target main | tee release.txt
+          echo "${{ needs.old-version.outputs.version }}" | tee version-old.txt
+          echo "${{ needs.new-version.outputs.version }}" | tee version-new.txt
+          gh release create ${{ needs.new-version.outputs.version }} --title '${{ needs.new-version.outputs.version }} \U0001F511\U0001F512\U0001F4BB' --generate-notes --prerelease --target main | tee release.txt
 
       - name: Archive Version Numbers
         uses: actions/upload-artifact@v3
@@ -72,19 +100,20 @@ jobs:
             release.txt
 
   release-assets:
-    needs: publish
-    name: Release Go Binary
+    needs: [publish]
+    name: "Release Go Binary"
     runs-on: ubuntu-latest
     permissions: write-all
     strategy:
       matrix:
-        goos: ['linux', 'windows', 'darwin']
-        goarch: ['386', 'amd64', 'arm64']
+        goos: ["linux", "windows", "darwin"]
+        goarch: ["386", "amd64", "arm64"]
         exclude:
           - goarch: "386"
             goos: darwin
           - goarch: arm64
             goos: windows
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
