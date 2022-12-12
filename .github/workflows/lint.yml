@@ -129,7 +129,7 @@ jobs:
             echo '```'
             ./download-actionlint.bash
             echo '```'
-          } >> "${GITHUB_STEP_SUMMARY}"
+          } | tee -a "${GITHUB_STEP_SUMMARY}"
 
       - name: Check Workflow Files
         run: |
@@ -139,4 +139,4 @@ jobs:
             echo '```'
             ./actionlint -color
             echo '```'
-          } >> "${GITHUB_STEP_SUMMARY}"
+          } | tee -a "${GITHUB_STEP_SUMMARY}"
