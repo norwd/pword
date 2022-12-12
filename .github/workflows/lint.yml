@@ -127,6 +127,7 @@ jobs:
             echo '```'
             echo '## Installation Log'
             echo '```'
+            chmod +x download-actionlint.bash
             ./download-actionlint.bash
             echo '```'
           } | tee -a "${GITHUB_STEP_SUMMARY}"
