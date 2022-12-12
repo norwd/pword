@@ -79,11 +79,7 @@ jobs:
       - name: Release ${{ needs.new-version.outputs.version }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "${{ needs.old-version.outputs.version }}" | tee version-old.txt
-          echo "${{ needs.new-version.outputs.version }}" | tee version-new.txt
-          gh release create ${{ needs.new-version.outputs.version }} --title '${{ needs.new-version.outputs.version }} 🔑🔒💻' --generate-notes --prerelease --target main --repo "${{ github.repository }}" | tee release.txt
-
+        run: "echo \"${{ needs.old-version.outputs.version }}\" | tee version-old.txt\necho \"${{ needs.new-version.outputs.version }}\" | tee version-new.txt\ngh release create ${{ needs.new-version.outputs.version }} --title '${{ needs.new-version.outputs.version }} \U0001F511\U0001F512\U0001F4BB' --generate-notes --prerelease --target main --repo \"${{ github.repository }}\" | tee release.txt\n#magic___^_^___line\n"
       - name: Archive Version Numbers
         uses: actions/upload-artifact@v3
         with:
