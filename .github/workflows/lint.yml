@@ -123,7 +123,7 @@ jobs:
           {
             echo '# Install Actionlint Tools'
             echo '```bash'
-            curl "$ACTIONLINT_INSTALLER_URL" | tee -a download-actionlint.bash
+            curl -sS "$ACTIONLINT_INSTALLER_URL" | tee -a download-actionlint.bash
             echo '```'
             echo '## Installation Log'
             echo '```'
