@@ -15,12 +15,12 @@ jobs:
   automerge:
     name: Enable Automerge
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Enable Automerge
-        continue-on-error: true
         uses: alexwilson/enable-github-automerge-action@1.0.0
         with:
           github-token: ${{ secrets.AUTO_MERGE_PWORD  || secrets.GITHUB_TOKEN }}
