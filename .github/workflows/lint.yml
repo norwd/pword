@@ -62,6 +62,7 @@ jobs:
           token: ${{ secrets.AUTO_YAML_FMT_PWORD }}
 
           # yamlfmt settings
+          keep-line-breaks: true
           include-files: |
             **/*.yaml
             **/*.yml
