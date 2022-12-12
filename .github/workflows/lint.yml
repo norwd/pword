@@ -118,7 +118,21 @@ jobs:
 
       - name: Install Actionlint Tools
         if: steps.cache-actionlint.outputs.cache-hit != 'true'
-        run: bash <(curl "$ACTIONLINT_INSTALLER_URL")
+        run: |
+          # shellcheck disable=SC2016
+          echo '# Install Actionlint Tools' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```bash' >> "${GITHUB_STEP_SUMMARY}"
+          curl "$ACTIONLINT_INSTALLER_URL" | tee -a download-actionlint.bash >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          echo '## Installation Log'
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          ./download-actionlint.bash
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Check Workflow Files
-        run: ./actionlint -color
+        run: |
+          # shellcheck disable=SC2016
+          echo '# Run `actionlint`' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          ./actionlint -color
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
