@@ -101,14 +101,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      # There is no need to actually cache this file, this is just to check the hash of all go files
       - name: Check if any Go files have changed
         id: cache-go-mod
         uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-${{ hashFiles('**/*.go', '**/go.mod', '**/go.sum') }}
-          path: |
-            # There is no need to actually cache this file, this is just to check the hash of all go files
-            go.mod
+          path: go.mod
 
       - name: Setup Go
         if: steps.cache-go-mod.outputs.cache-hit != 'true'
