@@ -52,9 +52,18 @@ jobs:
           go-version: '^1'
 
       - name: Run golint
+        id: golintr
         uses: norwd/golintr@v2
         with:
           path: './...'
+
+      - name: Display Errors
+        if: failure() && steps.golintr.outputs.errors != ''
+        shell: bash
+        env:
+          GOLINTR_ERRORS: ${{ steps.golintr.outputs.errors }}
+        run: |
+          echo "$GOLINTR_ERRORS" | awk -F : '{ file=$1; $1=""; line=$2; $2=""; title="Go Lint Error"; $3=""; print "::error file=" file ",line=" line ",title=" title "::" $0 }'  | tr -s '[:blank:]'
 
   vet:
     name: Run govet
