@@ -14,6 +14,7 @@ var rootCmd = &cobra.Command{
 	},
 }
 
+// Execute the command
 func Execute() error {
 	return rootCmd.Execute()
 }
