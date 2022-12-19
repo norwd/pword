@@ -106,7 +106,9 @@ jobs:
         uses: actions/cache@v3
         with:
           key: ${{ runner.os }}-${{ hashFiles('**/*.go', '**/go.mod', '**/go.sum') }}
-          path: go.mod # There is no need to actually cache this file, this is just to check the hash of all go files
+          path: |
+            # There is no need to actually cache this file, this is just to check the hash of all go files
+            go.mod
 
       - name: Setup Go
         if: steps.cache-go-mod.outputs.cache-hit != 'true'
