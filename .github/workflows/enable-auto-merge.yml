@@ -2,25 +2,27 @@
 
 name: "Enable Automerge"
 run-name: "Automerge enabled for #${{ github.event.number }}"
-permissions: read-all
+permissions:
+  pull-requests: write
+  contents: write
 
 on:
-  pull_request:
+  pull_request_target:
     types:
       - opened
       - reopened
       - ready_for_review
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   automerge:
     name: Enable Automerge
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: Enable Automerge
-        uses: alexwilson/enable-github-automerge-action@1.0.0
-        with:
-          github-token: ${{ secrets.AUTO_MERGE_PWORD  || secrets.GITHUB_TOKEN }}
+        run: gh -R ${{ github.repository }} pr merge ${{ github.event.number }} --auto --merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
