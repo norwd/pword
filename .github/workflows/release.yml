@@ -5,8 +5,7 @@ run-name: "Release workflow started by @${{ github.actor }}"
 permissions: read-all
 
 on:
-  pull_request:
-    types: ['closed']
+  push:
     branches: ['main']
     paths: ['internal/cmd/version.go']
 
@@ -22,7 +21,6 @@ jobs:
 
   old-version:
     name: "Get Current Version"
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -45,7 +43,6 @@ jobs:
 
   new-version:
     name: "Get Upcoming Version"
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     permissions:
       contents: read
