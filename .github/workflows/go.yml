@@ -105,7 +105,7 @@ jobs:
         id: cache-cover-out
         uses: actions/cache@v3
         with:
-          key: ${{ runner.os }}-${{ hashFiles('**/*.go', '**/go.mod', '**/go.sum') }}
+          key: ${{ runner.os }}-cover-out-${{ hashFiles('**/*.go', '**/go.mod', '**/go.sum') }}
           path: cover.out
 
       - name: Setup Go
