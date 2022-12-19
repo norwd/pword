@@ -121,23 +121,6 @@ jobs:
           # shellcheck disable=SC2016
           echo '# Run `go test` on Go${{ steps.setup-go.outputs.go-version }}-${{ runner.os }}' >> "${GITHUB_STEP_SUMMARY}"
 
-      - name: Restore goveralls from Cache
-        if: steps.cache-cover-out.outputs.cache-hit != 'true'
-        id: cache-goveralls
-        uses: actions/cache@v3
-        with:
-          path: ~/go/bin/goveralls
-          key: ${{ runner.os }}-goveralls
-
-      - name: Install goveralls
-        if: steps.cache-cover-out.outputs.cache-hit != 'true' && steps.cache-goveralls.outputs.cache-hit != 'true'
-        run: |
-          # shellcheck disable=SC2016
-          echo '## Tool Installation (`goveralls`)' >> "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          go install github.com/mattn/goveralls@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-
       - name: Restore gotestfmt from Cache
         if: steps.cache-cover-out.outputs.cache-hit != 'true'
         id: cache-gotestfmt
@@ -169,6 +152,22 @@ jobs:
           echo '## Test Results' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
           go test -json -race -covermode atomic -coverprofile "cover.out" ./... 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}" | gotestfmt
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Restore goveralls from Cache
+        id: cache-goveralls
+        uses: actions/cache@v3
+        with:
+          path: ~/go/bin/goveralls
+          key: ${{ runner.os }}-goveralls
+
+      - name: Install goveralls
+        if: steps.cache-goveralls.outputs.cache-hit != 'true'
+        run: |
+          # shellcheck disable=SC2016
+          echo '## Tool Installation (`goveralls`)' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          go install github.com/mattn/goveralls@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Upload Test Coverage
