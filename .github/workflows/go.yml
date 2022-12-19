@@ -52,14 +52,11 @@ jobs:
           go-version: '^1'
 
       - name: Run golint
-        id: golintr
         uses: norwd/golintr@v2
-        with:
-          path: './...'
+        id: golintr
 
       - name: Display Errors
         if: failure() && steps.golintr.outputs.errors != ''
-        shell: bash
         env:
           GOLINTR_ERRORS: ${{ steps.golintr.outputs.errors }}
         run: |
