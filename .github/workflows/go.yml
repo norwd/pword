@@ -169,12 +169,11 @@ jobs:
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Upload Test Coverage
-        continue-on-error: true
         env:
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo '## Coverage Report' >> "${GITHUB_STEP_SUMMARY}"
-          goveralls -coverprofile "cover.out" -service github | tee -a "${GITHUB_STEP_SUMMARY}"
+          ~/go/bin/goveralls -coverprofile "cover.out" -service github | tee -a "${GITHUB_STEP_SUMMARY}"
 
   fmt:
     name: Run gofmt and goimports
