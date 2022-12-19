@@ -15,6 +15,7 @@ var rootCmd = &cobra.Command{
 }
 
 // Execute will run the root command and return an error if one occurred.
+
 func Execute() error {
 	return rootCmd.Execute()
 }
