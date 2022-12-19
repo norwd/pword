@@ -101,26 +101,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Check if any Go files have changed
+        id: cache-cover-out
+        uses: actions/cache@v3
+        with:
+          key: ${{ runner.os }}-cover-out-${{ hashFiles('**/*.go', '**/go.mod', '**/go.sum') }}
+          path: cover.out
+
       - name: Setup Go
+        if: steps.cache-cover-out.outputs.cache-hit != 'true'
         id: setup-go
         uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go }}
 
       - name: Begin Summary
+        if: steps.cache-cover-out.outputs.cache-hit != 'true'
         run: |
           # shellcheck disable=SC2016
           echo '# Run `go test` on Go${{ steps.setup-go.outputs.go-version }}-${{ runner.os }}' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Restore goveralls from Cache
-        uses: actions/cache@v3
+        if: steps.cache-cover-out.outputs.cache-hit != 'true'
         id: cache-goveralls
+        uses: actions/cache@v3
         with:
           path: ~/go/bin/goveralls
           key: ${{ runner.os }}-goveralls
 
       - name: Install goveralls
-        if: steps.cache-goveralls.outputs.cache-hit != 'true'
+        if: steps.cache-cover-out.outputs.cache-hit != 'true' && steps.cache-goveralls.outputs.cache-hit != 'true'
         run: |
           # shellcheck disable=SC2016
           echo '## Tool Installation (`goveralls`)' >> "${GITHUB_STEP_SUMMARY}"
@@ -129,14 +139,15 @@ jobs:
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Restore gotestfmt from Cache
-        uses: actions/cache@v3
+        if: steps.cache-cover-out.outputs.cache-hit != 'true'
         id: cache-gotestfmt
+        uses: actions/cache@v3
         with:
           path: ~/go/bin/gotestfmt
           key: ${{ runner.os }}-gotestfmt
 
       - name: Install gotestfmt
-        if: steps.cache-gotestfmt.outputs.cache-hit != 'true'
+        if: steps.cache-cover-out.outputs.cache-hit != 'true' && steps.cache-gotestfmt.outputs.cache-hit != 'true'
         run: |
           # shellcheck disable=SC2016
           echo '## Tool Installation (`gotestfmt`)' >> "${GITHUB_STEP_SUMMARY}"
@@ -145,6 +156,7 @@ jobs:
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Build
+        if: steps.cache-cover-out.outputs.cache-hit != 'true'
         run: |
           echo '## Build Log' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
@@ -152,6 +164,7 @@ jobs:
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Test
+        if: steps.cache-cover-out.outputs.cache-hit != 'true'
         run: |
           echo '## Test Results' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
@@ -164,7 +177,9 @@ jobs:
           COVERALLS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo '## Coverage Report' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
           goveralls -coverprofile "cover.out" -service github | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
   test-status:
     name: Check All Tests Pass
