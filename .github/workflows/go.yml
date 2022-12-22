@@ -52,7 +52,7 @@ jobs:
           go-version: '^1'
 
       - name: Run golint
-        uses: norwd/golintr@v2.1.0-beta.2
+        uses: norwd/golintr@v2.1.0-beta.3
 
   vet:
     name: Run govet
