@@ -56,7 +56,7 @@ jobs:
 
       - name: Run golintr
         id: golintr
-        uses: norwd/golintr@v2.1.0-beta.3
+        uses: norwd/golintr@v2
 
       - name: Summarise Errors
         if: failure()
