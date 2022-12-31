@@ -51,8 +51,19 @@ jobs:
         with:
           go-version: '^1'
 
-      - name: Run golint
+      - name: Run golintr
+        id: golintr
         uses: norwd/golintr@v2.1.0-beta.3
+
+      - name: Summarise Errors
+        if: failure()
+        env:
+          ERRORS: ${{ steps.golinter.outputs.errors }}
+        run: |
+          echo '## Go lint errors' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          echo "${ERRORS}" 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
   vet:
     name: Run govet
