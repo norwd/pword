@@ -61,7 +61,7 @@ jobs:
       - name: Summarise Errors
         if: failure()
         env:
-          ERRORS: ${{ steps.golinter.outputs.errors }}
+          ERRORS: ${{ steps.golintr.outputs.errors }}
         run: |
           echo '## Go lint errors' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
