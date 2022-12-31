@@ -29,11 +29,11 @@ func runSimpleCmd(cmd *cobra.Command, args []string) (err error) {
 
 	buf := make([]byte, length)
 
-	if _, err = rand.Read(buf[:]); err != nil {
+	if _, err = rand.Read(buf); err != nil {
 		return
 	}
 
-	fmt.Println(base64.RawStdEncoding.EncodeToString(buf[:])[:length])
+	fmt.Println(base64.RawStdEncoding.EncodeToString(buf)[:length])
 
 	return
 }

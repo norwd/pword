@@ -27,11 +27,12 @@ func TestRunSimpleCmd(t *testing.T) {
 
 			err := runSimpleCmd(cmd, []string{})
 
-			if err == nil && test.err != nil {
+			switch {
+			case err == nil && test.err != nil:
 				t.Error("want error, got nil")
-			} else if err != nil && test.err == nil {
+			case err != nil && test.err == nil:
 				t.Errorf("want nil error, got %q", err)
-			} else if err != nil && test.err != nil {
+			case err != nil && test.err != nil:
 				test.err(t, err)
 			}
 		})

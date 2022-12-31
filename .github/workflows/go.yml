@@ -39,6 +39,54 @@ jobs:
         with:
           category: "/language:go"
 
+  critic:
+    name: Run gocritic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1'
+
+      - name: Begin Summary
+        run: echo "# Run \`go gocritic\`" >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Restore gocritic from Cache
+        uses: actions/cache@v3
+        id: cache-gocritic
+        with:
+          path: /home/runner/go/bin/gocritic
+          key: ${{ runner.os }}-gocritic
+
+      - name: Install gocritic
+        if: steps.cache-gocritic.outputs.cache-hit != 'true'
+        run: |
+          # shellcheck disable=SC2016
+          echo '## Tool Installation (`gocritic`)' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          go install -v github.com/go-critic/go-critic/cmd/gocritic@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Run gocritic
+        run: |
+          FAIL_FILE="$(openssl rand -hex 8).failure"
+
+          echo '## Results' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          {
+            gocritic check ./... 2>&1 || touch "${FAIL_FILE}"
+          } | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+
+          if [ -e "${FAIL_FILE}" ]
+          then
+            rm "${FAIL_FILE}"
+            exit 1
+          fi
+
   lint:
     name: Run golint
     runs-on: ubuntu-latest
