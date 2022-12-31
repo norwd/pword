@@ -72,10 +72,16 @@ jobs:
 
       - name: Run gocritic
         run: |
+          EXIT_CODE=0
+
           echo '## Results' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          gocritic check ./... 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          {
+            gocritic check ./... 2>&1 || EXIT_CODE="$?"
+          } | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
+
+          exit "${EXIT_CODE}"
 
   lint:
     name: Run golint
