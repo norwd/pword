@@ -77,7 +77,7 @@ jobs:
           echo '## Results' >> "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
           {
-            gocritic check ./... 2>&1 || touch "${FAIL_FILE}"
+            gocritic check -enableAll ./... 2>&1 || touch "${FAIL_FILE}"
           } | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
