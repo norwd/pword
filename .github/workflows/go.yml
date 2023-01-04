@@ -359,7 +359,6 @@ jobs:
       contents: write
       deployments: write
       packages: write
-      pages: write
       statuses: write
     steps:
       - name: Checkout
