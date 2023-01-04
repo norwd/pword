@@ -360,7 +360,6 @@ jobs:
       deployments: write
       packages: write
       pages: write
-      repository-projects: write
       security-events: write
       statuses: write
     steps:
