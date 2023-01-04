@@ -349,3 +349,19 @@ jobs:
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
           curl -X POST -F "repo=github.com/$GITHUB_REPOSITORY" https://goreportcard.com/checks 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
+
+  dependencies:
+    name: Notify Dependency Submission API
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1'
+
+      - name: Notify Dependency Submission API
+        uses: actions/go-dependency-submission@v1
