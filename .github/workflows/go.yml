@@ -358,7 +358,6 @@ jobs:
       checks: write
       contents: write
       deployments: write
-      id-token: write
       issues: write
       discussions: write
       packages: write
