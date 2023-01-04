@@ -357,7 +357,6 @@ jobs:
     permissions:
       checks: write
       contents: write
-      deployments: write
       statuses: write
     steps:
       - name: Checkout
