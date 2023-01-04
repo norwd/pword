@@ -358,7 +358,6 @@ jobs:
       checks: write
       contents: write
       deployments: write
-      discussions: write
       packages: write
       pages: write
       repository-projects: write
