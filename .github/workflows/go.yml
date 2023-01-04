@@ -357,7 +357,6 @@ jobs:
     permissions:
       checks: write
       contents: write
-      statuses: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
