@@ -40,6 +40,7 @@ jobs:
           category: "/language:go"
 
   gosec:
+    name: Run Gosec Security Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
