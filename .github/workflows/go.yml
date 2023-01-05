@@ -39,6 +39,25 @@ jobs:
         with:
           category: "/language:go"
 
+  gosec:
+    name: Run Gosec Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '^1'
+
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@v2.14.0
+        with:
+          args: ./...
+        env:
+          GO111MODULE: "on"
+
   critic:
     name: Run gocritic
     runs-on: ubuntu-latest
