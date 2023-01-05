@@ -55,7 +55,7 @@ jobs:
         with:
           args: ./...
         env:
-          GO111MODULE: on
+          GO111MODULE: "on"
 
   critic:
     name: Run gocritic
