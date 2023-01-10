@@ -41,7 +41,7 @@ func TestExecuteCallsRootCmd(t *testing.T) {
 				},
 			}
 
-			var err error = Execute()
+			err := Execute()
 
 			if have, want := count, 1; have != want {
 				t.Errorf("call count: have %d, want %d", have, want)
