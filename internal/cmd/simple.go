@@ -20,6 +20,9 @@ var simpleCmd = &cobra.Command{
 	RunE:  runSimpleCmd,
 }
 
+func Fake(a string, b string) {
+}
+
 func runSimpleCmd(cmd *cobra.Command, args []string) (err error) {
 	var length int
 	if length, err = cmd.Flags().GetInt("length"); err != nil {
