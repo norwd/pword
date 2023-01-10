@@ -20,7 +20,7 @@ var simpleCmd = &cobra.Command{
 	RunE:  runSimpleCmd,
 }
 
-func Fake(a string, b string) {
+func Fake(a, b string) {
 }
 
 func runSimpleCmd(cmd *cobra.Command, args []string) (err error) {
