@@ -265,6 +265,22 @@ jobs:
           # shellcheck disable=SC2016
           echo '# Run `gofmt` and `goimports`' >> "${GITHUB_STEP_SUMMARY}"
 
+      - name: Restore gofumpt from Cache
+        uses: actions/cache@v3
+        id: cache-gofumpt
+        with:
+          path: /home/runner/go/bin/gofumpt
+          key: ${{ runner.os }}-gofumpt
+
+      - name: Install gofumpt
+        if: steps.cache-gofumpt.outputs.cache-hit != 'true'
+        run: |
+          # shellcheck disable=SC2016
+          echo '## Tool Installation (`gofumpt`)' >> "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          go install mvdan.cc/gofumpt@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+
       - name: Restore goimports from Cache
         uses: actions/cache@v3
         id: cache-goimports
@@ -282,7 +298,7 @@ jobs:
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Run gofmt
-        run: gofmt -l -w -s .
+        run: gofumpt -l -w -s .
 
       - name: Run goimports
         run: goimports -w .
