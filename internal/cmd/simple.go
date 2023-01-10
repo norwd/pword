@@ -3,9 +3,8 @@ package cmd
 import (
 	"crypto/rand"
 	"encoding/base64"
-	"fmt"
-
 	"github.com/spf13/cobra"
+	"fmt"
 )
 
 func init() {
