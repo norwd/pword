@@ -298,7 +298,7 @@ jobs:
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Run gofmt
-        run: gofumpt -l -w -s .
+        run: gofumpt -l -w -s -extra .
 
       - name: Run goimports
         run: goimports -w .
