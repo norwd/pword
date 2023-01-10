@@ -22,13 +22,11 @@ var simpleCmd = &cobra.Command{
 
 func runSimpleCmd(cmd *cobra.Command, args []string) (err error) {
 	var length int
-
 	if length, err = cmd.Flags().GetInt("length"); err != nil {
 		return
 	}
 
-	buf := make([]byte, length)
-
+	var buf []byte = make([]byte, length)
 	if _, err = rand.Read(buf); err != nil {
 		return
 	}
