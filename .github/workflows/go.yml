@@ -246,7 +246,7 @@ jobs:
           ~/go/bin/goveralls -coverprofile "cover.out" -service github | tee -a "${GITHUB_STEP_SUMMARY}"
 
   fmt:
-    name: Run gofmt and goimports
+    name: Run gofumpt
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -281,27 +281,8 @@ jobs:
           go install mvdan.cc/gofumpt@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
           echo '```' >> "${GITHUB_STEP_SUMMARY}"
 
-      - name: Restore goimports from Cache
-        uses: actions/cache@v3
-        id: cache-goimports
-        with:
-          path: /home/runner/go/bin/goimports
-          key: ${{ runner.os }}-goimports
-
-      - name: Install goimports
-        if: steps.cache-goimports.outputs.cache-hit != 'true'
-        run: |
-          # shellcheck disable=SC2016
-          echo '## Tool Installation (`goimports`)' >> "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-          go install golang.org/x/tools/cmd/goimports@latest 2>&1 | tee -a "${GITHUB_STEP_SUMMARY}"
-          echo '```' >> "${GITHUB_STEP_SUMMARY}"
-
-      - name: Run gofmt
+      - name: Run gofumpt
         run: gofumpt -l -w -s -extra .
-
-      - name: Run goimports
-        run: goimports -w .
 
       - name: Setup GPG Keys
         continue-on-error: true
@@ -326,7 +307,7 @@ jobs:
           commit_author: norwd <106889957+norwd@users.noreply.github.com>
           commit_user_name: norwd
           commit_user_email: 106889957+norwd@users.noreply.github.com
-          commit_message: Auto go-fmt
+          commit_message: Auto gofumpt
           commit_options: -s -S
 
   report:
